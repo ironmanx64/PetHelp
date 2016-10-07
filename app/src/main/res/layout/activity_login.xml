@@ -16,21 +16,22 @@
         android:inputType="textPersonName"
         android:text="Name"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/editTextNombrelogin"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="36dp"
+        android:textIsSelectable="false" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/editTextpasswordlogin"
         android:text="Password"
-        android:layout_below="@+id/editText"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText"
+        android:layout_below="@+id/editTextNombrelogin"
+        android:layout_alignLeft="@+id/editTextNombrelogin"
+        android:layout_alignStart="@+id/editTextNombrelogin"
         android:layout_marginTop="36dp" />
 
     <Button
@@ -38,17 +39,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/progressBar"
-        android:layout_toStartOf="@+id/progressBar" />
+        android:id="@+id/buttonaceptarlogin"
+        android:layout_below="@+id/editTextpasswordlogin"
+        android:layout_toLeftOf="@+id/progressBarlogin"
+        android:layout_toStartOf="@+id/progressBarlogin"
+        android:layout_marginTop="63dp" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_below="@+id/button"
+        android:id="@+id/progressBarlogin"
+        android:layout_below="@+id/buttonaceptarlogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:indeterminate="true" />
@@ -57,9 +59,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrarse"
-        android:id="@+id/button2"
-        android:layout_above="@+id/progressBar"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_alignEnd="@+id/editText2" />
+        android:id="@+id/buttonregistrarselogin"
+        android:layout_above="@+id/progressBarlogin"
+        android:layout_alignRight="@+id/editTextpasswordlogin"
+        android:layout_alignEnd="@+id/editTextpasswordlogin" />
 
 </RelativeLayout>
