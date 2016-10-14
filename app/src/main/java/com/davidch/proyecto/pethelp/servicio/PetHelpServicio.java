@@ -1,5 +1,6 @@
 package com.davidch.proyecto.pethelp.servicio;
 
+import com.davidch.proyecto.pethelp.modelo.Especie;
 import com.davidch.proyecto.pethelp.modelo.Login;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
 import com.davidch.proyecto.pethelp.modelo.Usuario;
@@ -15,9 +16,12 @@ import retrofit2.http.POST;
  */
 public interface PetHelpServicio {
 
-    @POST("registrar.php")
+    @POST("registrar")
     Call<Void> registrar(@Body Usuario usuario);
 
-    @POST("mis-mascotas.php")
+    @POST("mis-mascotas")
     Call<List<Mascota>> getMisMascotas(@Body Login login);
+
+    @POST("obtener-especies")
+    Call<List<Especie>> getEspecies(@Body Login login);
 }

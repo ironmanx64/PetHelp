@@ -6,13 +6,13 @@ package com.davidch.proyecto.pethelp.modelo;
 
 public class Especie {
 
-    int id_especie;
+    private int id_especie;
 
-    String nombre;
+    private String especie;
 
     public Especie(int id_especie, String nombre) {
         this.id_especie = id_especie;
-        this.nombre = nombre;
+        this.especie = especie;
     }
 
 
@@ -24,11 +24,11 @@ public class Especie {
         this.id_especie = id_especie;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getEspecie() {
+        return especie;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEspecie(String nombre) {
+        this.especie = especie;
     }
 }

@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.davidch.proyecto.pethelp.modelo.Login;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
-import com.davidch.proyecto.pethelp.modelo.MascotasAdapter;
+import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
 import com.davidch.proyecto.pethelp.servicio.FactoriaServicio;
 import com.davidch.proyecto.pethelp.servicio.PetHelpServicio;
 

@@ -20,7 +20,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        android:textIsSelectable="false" />
+        android:textIsSelectable="false"
+        android:textColor="?attr/colorSwitchThumbNormal" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,7 +33,8 @@
         android:layout_below="@+id/editTextNombrelogin"
         android:layout_alignLeft="@+id/editTextNombrelogin"
         android:layout_alignStart="@+id/editTextNombrelogin"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="36dp"
+        android:textColor="?attr/colorSwitchThumbNormal" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

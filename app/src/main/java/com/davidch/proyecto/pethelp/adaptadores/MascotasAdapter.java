@@ -1,4 +1,4 @@
-package com.davidch.proyecto.pethelp.modelo;
+package com.davidch.proyecto.pethelp.adaptadores;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.davidch.proyecto.pethelp.R;
-
-import org.w3c.dom.Text;
+import com.davidch.proyecto.pethelp.modelo.Mascota;
 
 import java.util.List;
 
