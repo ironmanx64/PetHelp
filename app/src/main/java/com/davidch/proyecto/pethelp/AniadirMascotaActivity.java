@@ -59,8 +59,8 @@ public class AniadirMascotaActivity extends AppCompatActivity
                 new ArrayList<Especie>());
         spinnerespecies.setAdapter(adaptadorEspecies);
 
-        FactoriaServicio.getPetHelpServicio()
-                .getEspecies(new Login(this))
+        FactoriaServicio.getPetHelpServicio(new Login(this))
+                .getEspecies()
                 .enqueue(this);
     }
 

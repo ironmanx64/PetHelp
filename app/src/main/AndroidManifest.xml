@@ -20,7 +20,11 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MascotasActivity" />
         <activity android:name=".DescriptionPetActivity" />
-        <activity android:name=".AniadirMascotaActivity"></activity>
+        <activity android:name=".AniadirMascotaActivity" />
+
+        <service
+            android:name=".sincronizacion.SincronizacionService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

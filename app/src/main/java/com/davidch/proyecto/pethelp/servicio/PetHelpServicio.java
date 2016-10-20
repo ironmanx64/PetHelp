@@ -9,6 +9,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -16,12 +17,12 @@ import retrofit2.http.POST;
  */
 public interface PetHelpServicio {
 
-    @POST("registrar")
+    @POST("usuarios/registrar")
     Call<Void> registrar(@Body Usuario usuario);
 
-    @POST("mis-mascotas")
-    Call<List<Mascota>> getMisMascotas(@Body Login login);
+    @GET("mascotas")
+    Call<List<Mascota>> getMisMascotas();
 
-    @POST("obtener-especies")
-    Call<List<Especie>> getEspecies(@Body Login login);
+    @GET("especies")
+    Call<List<Especie>> getEspecies();
 }

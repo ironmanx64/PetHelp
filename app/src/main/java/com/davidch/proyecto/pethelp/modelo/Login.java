@@ -2,6 +2,9 @@ package com.davidch.proyecto.pethelp.modelo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
+
+import okhttp3.Credentials;
 
 /**
  * Created by adeka on 19/08/2016.
@@ -28,11 +31,8 @@ public class Login {
         clave = preferencias.getString("clave", "");
     }
 
-    public String getClave() {
-        return clave;
+    public String getBasicAuthToken() {
+        return Credentials.basic(nick, clave);
     }
 
-    public String getNick() {
-        return nick;
-    }
 }

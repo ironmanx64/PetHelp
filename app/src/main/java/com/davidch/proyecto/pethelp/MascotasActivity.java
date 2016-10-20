@@ -36,9 +36,9 @@ public class MascotasActivity extends AppCompatActivity
         recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        PetHelpServicio servicio = FactoriaServicio.getPetHelpServicio();
+        PetHelpServicio servicio = FactoriaServicio.getPetHelpServicio(new Login(this));
 
-        servicio.getMisMascotas(new Login(this))
+        servicio.getMisMascotas()
                 .enqueue(this);
     }
 
