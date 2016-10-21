@@ -24,7 +24,13 @@
 
         <service
             android:name=".sincronizacion.SincronizacionService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <provider
+            android:name=".datos.PethelpContentProvider"
+            android:authorities="com.davidch.proyecto.pethelp.datos"
+            android:enabled="true"
+            android:exported="false"></provider>
     </application>
 
 </manifest>

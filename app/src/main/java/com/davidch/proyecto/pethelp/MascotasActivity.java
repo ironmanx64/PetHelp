@@ -1,6 +1,10 @@
 package com.davidch.proyecto.pethelp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.modelo.Login;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
 import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
@@ -24,22 +29,27 @@ import retrofit2.Response;
 
 public class MascotasActivity extends AppCompatActivity
         implements
-            Callback<List<Mascota>>,
+            LoaderManager.LoaderCallbacks<Cursor>,
             MascotasAdapter.OnMascotaClickListener {
 
-    RecyclerView recyclerView;
+    public static final int LOADER_MASCOTAS = 1;
+
+    private static final String [] PROYECCION_MASCOTAS = new String [] {
+
+    };
+
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_mascotas);
+
         recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        PetHelpServicio servicio = FactoriaServicio.getPetHelpServicio(new Login(this));
-
-        servicio.getMisMascotas()
-                .enqueue(this);
+        getSupportLoaderManager().initLoader(LOADER_MASCOTAS, null, this);
     }
 
     @Override
@@ -62,32 +72,26 @@ public class MascotasActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResponse(Call<List<Mascota>> call, Response<List<Mascota>> response) {
-        if (response.isSuccessful()) {
-            recyclerView.setAdapter(new MascotasAdapter(response.body(), this));
-        }
-        else {
-            Log.w(MascotasActivity.class.getName(), "Error recuperando mascotas: " + response.code());
-            try {
-                Log.d(MascotasActivity.class.getName(), response.errorBody().string());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    @Override
-    public void onFailure(Call<List<Mascota>> call, Throwable t) {
-        Log.d(MascotasActivity.class.getName(), "Error recuperando mascotas", t);
-    }
-
-    @Override
     public void onMascotaClick(Mascota mascota) {
         Intent intent = new Intent(this, DescriptionPetActivity.class);
         intent.putExtra("mascota", mascota);
         startActivity(intent);
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        CursorLoader loader = new CursorLoader(this);
+        loader.setUri(PethelpContentProvider.getUriMascotas());
+        loader.setProjection();
+    }
 
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
 }

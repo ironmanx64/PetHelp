@@ -1,83 +1,73 @@
 package com.davidch.proyecto.pethelp.sincronizacion;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
+import android.util.Log;
+
+import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
+import com.davidch.proyecto.pethelp.modelo.Login;
+import com.davidch.proyecto.pethelp.modelo.Mascota;
+import com.davidch.proyecto.pethelp.servicio.FactoriaServicio;
+import com.davidch.proyecto.pethelp.servicio.PetHelpServicio;
+
+import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Response;
 
 public class SincronizacionService extends IntentService {
 
-    private static final String ACTION_MASCOTAS = "com.davidch.proyecto.pethelp.sincronizacion.action.MASCOTAS";
-    private static final String ACTION_BAZ = "com.davidch.proyecto.pethelp.sincronizacion.action.BAZ";
+    private static final String TAG = SincronizacionService.class.getName();
 
-    // TODO: Rename parameters
-    private static final String EXTRA_PARAM1 = "com.davidch.proyecto.pethelp.sincronizacion.extra.PARAM1";
-    private static final String EXTRA_PARAM2 = "com.davidch.proyecto.pethelp.sincronizacion.extra.PARAM2";
+    private static final String ACTION_MASCOTAS = "com.davidch.proyecto.pethelp.sincronizacion.action.MASCOTAS";
 
     public SincronizacionService() {
         super("SincronizacionService");
     }
 
-    /**
-     * Starts this service to perform action Foo with the given parameters. If
-     * the service is already performing a task this action will be queued.
-     *
-     * @see IntentService
-     */
-    // TODO: Customize helper method
-    public static void startActionFoo(Context context, String param1, String param2) {
+    public static void startActionMascotas(Context context) {
         Intent intent = new Intent(context, SincronizacionService.class);
-        intent.setAction(ACTION_FOO);
-        intent.putExtra(EXTRA_PARAM1, param1);
-        intent.putExtra(EXTRA_PARAM2, param2);
-        context.startService(intent);
-    }
-
-    /**
-     * Starts this service to perform action Baz with the given parameters. If
-     * the service is already performing a task this action will be queued.
-     *
-     * @see IntentService
-     */
-    // TODO: Customize helper method
-    public static void startActionBaz(Context context, String param1, String param2) {
-        Intent intent = new Intent(context, SincronizacionService.class);
-        intent.setAction(ACTION_BAZ);
-        intent.putExtra(EXTRA_PARAM1, param1);
-        intent.putExtra(EXTRA_PARAM2, param2);
+        intent.setAction(ACTION_MASCOTAS);
         context.startService(intent);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
-            final String action = intent.getAction();
-            if (ACTION_FOO.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                final String param2 = intent.getStringExtra(EXTRA_PARAM2);
-                handleActionFoo(param1, param2);
-            } else if (ACTION_BAZ.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                final String param2 = intent.getStringExtra(EXTRA_PARAM2);
-                handleActionBaz(param1, param2);
+
+            PetHelpServicio servicio = FactoriaServicio.getPetHelpServicio(new Login(this));
+
+            switch (intent.getAction()) {
+                case ACTION_MASCOTAS:
+                    handleActionMascotas(servicio);
+                    break;
             }
         }
     }
 
-    /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionFoo(String param1, String param2) {
-        // TODO: Handle action Foo
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void handleActionMascotas(PetHelpServicio servicio) {
+
+        try {
+            Response<List<Mascota>> mascotas = servicio.getMisMascotas().execute();
+            if (mascotas.isSuccessful()) {
+                getContentResolver().delete(PethelpContentProvider.getUriMascotas(), null, null);
+                ContentValues [] cvs = new ContentValues [mascotas.body().size()];
+                int i = 0;
+                for (Mascota mascota: mascotas.body()) {
+                    cvs[i++] = mascota.toContentValues();
+                }
+                getContentResolver().bulkInsert(PethelpContentProvider.getUriMascotas(), cvs);
+            }
+            else {
+                Log.e(TAG, "No se pudieron sincronizar las mascotas (resultado http " + mascotas.code() + ")");
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, "No se pudieron sincronizar las mascotas", e);
+        }
+
     }
 
-    /**
-     * Handle action Baz in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionBaz(String param1, String param2) {
-        // TODO: Handle action Baz
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 }
