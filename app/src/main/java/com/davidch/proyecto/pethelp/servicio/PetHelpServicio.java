@@ -6,6 +6,7 @@ import com.davidch.proyecto.pethelp.modelo.Mascota;
 import com.davidch.proyecto.pethelp.modelo.Usuario;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -23,6 +24,10 @@ public interface PetHelpServicio {
     @GET("mascotas")
     Call<List<Mascota>> getMisMascotas();
 
+    @POST("mascotas/sincronizar")
+    Call<List<Mascota>> sincronizarMascotas(Map<String, List<Mascota>> mascotas);
+
     @GET("especies")
     Call<List<Especie>> getEspecies();
+
 }

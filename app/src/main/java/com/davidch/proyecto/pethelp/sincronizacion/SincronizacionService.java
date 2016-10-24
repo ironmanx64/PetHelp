@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
@@ -37,37 +38,12 @@ public class SincronizacionService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
 
-            PetHelpServicio servicio = FactoriaServicio.getPetHelpServicio(new Login(this));
-
             switch (intent.getAction()) {
                 case ACTION_MASCOTAS:
-                    handleActionMascotas(servicio);
+                    new SincronizadorMascotas(this).sincronizar();
                     break;
             }
         }
-    }
-
-    private void handleActionMascotas(PetHelpServicio servicio) {
-
-        try {
-            Response<List<Mascota>> mascotas = servicio.getMisMascotas().execute();
-            if (mascotas.isSuccessful()) {
-                getContentResolver().delete(PethelpContentProvider.getUriMascotas(), null, null);
-                ContentValues [] cvs = new ContentValues [mascotas.body().size()];
-                int i = 0;
-                for (Mascota mascota: mascotas.body()) {
-                    cvs[i++] = mascota.toContentValues();
-                }
-                getContentResolver().bulkInsert(PethelpContentProvider.getUriMascotas(), cvs);
-            }
-            else {
-                Log.e(TAG, "No se pudieron sincronizar las mascotas (resultado http " + mascotas.code() + ")");
-            }
-
-        } catch (IOException e) {
-            Log.e(TAG, "No se pudieron sincronizar las mascotas", e);
-        }
-
     }
 
 }

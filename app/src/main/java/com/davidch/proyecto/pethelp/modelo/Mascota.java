@@ -1,13 +1,16 @@
 package com.davidch.proyecto.pethelp.modelo;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.datos.tablas.Tabla;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by adeka on 22/08/2016.
@@ -23,6 +26,16 @@ public class Mascota implements Parcelable {
     private long idFamilia;
 
     public Mascota() {
+    }
+
+    public Mascota(Cursor c) {
+        idMascota = c.getInt(0);
+        nombre = c.getString(1);
+        apodo = c.getString(2);
+        sexo = c.getString(3).charAt(0);
+        fechaReproduccion = Mascotas.dateFromSQL(c.getString(4));
+        fechaNacimiento = Mascotas.dateFromSQL(c.getString(5));
+        idFamilia = c.getInt(6);
     }
 
     public Mascota(long idMascota, String nombre, String apodo, char sexo, Date fechaReproduccion,
@@ -44,6 +57,17 @@ public class Mascota implements Parcelable {
         fechaReproduccion = new Date(in.readLong());
         fechaNacimiento = new Date(in.readLong());
         idFamilia = in.readLong();
+    }
+
+    public static final List<Mascota> fromCursor(Cursor cursor) {
+        List<Mascota> mascotas = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                mascotas.add(new Mascota(cursor));
+            }
+            while (cursor.moveToNext());
+        }
+        return mascotas;
     }
 
     public static final Creator<Mascota> CREATOR = new Creator<Mascota>() {
@@ -95,8 +119,8 @@ public class Mascota implements Parcelable {
         cv.put(Mascotas.NOMBRE, nombre);
         cv.put(Mascotas.APODO, apodo);
         cv.put(Mascotas.SEXO, Character.toString(sexo));
-        cv.put(Mascotas.FECHA_NACIMIENTO, Tabla.toSQL(fechaNacimiento));
-        cv.put(Mascotas.FECHA_REPRODUCCION, Tabla.toSQL(fechaReproduccion));
+        cv.put(Mascotas.FECHA_NACIMIENTO, Tabla.dateToSQL(fechaNacimiento));
+        cv.put(Mascotas.FECHA_REPRODUCCION, Tabla.dateToSQL(fechaReproduccion));
         cv.put(Mascotas.ID_FAMILIA, idFamilia);
         return cv;
     }

@@ -15,6 +15,19 @@ public class Mascotas extends Tabla {
     public static final String FECHA_NACIMIENTO = "fecha_nacimiento";
     public static final String ID_FAMILIA = "id_familia";
 
+    public static final String [] PROYECCION_COMPLETA = {
+            ID,
+            NOMBRE,
+            APODO,
+            SEXO,
+            FECHA_REPRODUCCION,
+            FECHA_NACIMIENTO,
+            ID_FAMILIA,
+            ACTUALIZADO,
+            INSERTADO,
+            BORRADO
+    };
+
     public static final String DROP =
             "DROP TABLE " + TABLA;
 
@@ -25,6 +38,10 @@ public class Mascotas extends Tabla {
                     SEXO + " CHAR(1) DEFAULT NULL, " +
                     FECHA_REPRODUCCION + " DATE DEAFULT NULL, " +
                     FECHA_NACIMIENTO + " DATE DEFAULT NULL, " +
-                    ID_FAMILIA + " INTEGER DEFAULT NULL)";
+                    ID_FAMILIA + " INTEGER DEFAULT NULL," +
+                    ACTUALIZADO + " BOOLEAN DEFAULT FALSE, " +
+                    INSERTADO + " BOOLEAN DEFAULT FALSE, " +
+                    BORRADO + " BOOLEAN DEFAULT FALSE" +
+                    ")";
 
 }
