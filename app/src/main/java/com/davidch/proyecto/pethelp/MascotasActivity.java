@@ -1,7 +1,9 @@
 package com.davidch.proyecto.pethelp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.modelo.Login;
@@ -39,6 +42,7 @@ public class MascotasActivity extends AppCompatActivity
     };
 
     private RecyclerView recyclerView;
+    private FloatingActionButton botonflotantemascotas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +51,32 @@ public class MascotasActivity extends AppCompatActivity
         setContentView(R.layout.activity_mascotas);
 
         recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
+        botonflotantemascotas=(FloatingActionButton)findViewById(R.id.buttonfloatingmascotas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        getSupportLoaderManager().initLoader(LOADER_MASCOTAS, null, this);
+
+        botonflotantemascotas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentmascotadescrip = new Intent (getBaseContext(),AniadirMascotaActivity.class);
+
+                startActivity(intentmascotadescrip);
+            }
+        });
+
+
+        //getSupportLoaderManager().initLoader(LOADER_MASCOTAS, null, this);
     }
 
+
+    /*
+    //opcion quitada de menu puesto floating button
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.aniadirmascota,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -70,6 +90,7 @@ public class MascotasActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+    */
 
     @Override
     public void onMascotaClick(Mascota mascota) {
@@ -78,11 +99,15 @@ public class MascotasActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        /*
         CursorLoader loader = new CursorLoader(this);
         loader.setUri(PethelpContentProvider.getUriMascotas());
         loader.setProjection();
+        */
+        return null;
     }
 
     @Override
