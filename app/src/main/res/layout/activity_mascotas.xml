@@ -7,16 +7,34 @@
     android:layout_width="match_parent"
     tools:context="com.davidch.proyecto.pethelp.MascotasActivity"
     >
-<android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     android:id="@+id/reclicerview">
 
-</android.support.v7.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>
 
-<android.support.design.widget.FloatingActionButton
+    <android.support.v4.widget.DrawerLayout
+    android:fitsSystemWindows="true"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+    <!-- Contenido Principal -->
+
+    <!-- Menú Deslizante -->
+    <android.support.design.widget.NavigationView
+    android:layout_gravity="start"
+    android:fitsSystemWindows="true"
+    app:headerLayout="@layout/nav_header"
+    app:menu="@menu/nav_menu"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonfloatingmascotas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,6 +42,6 @@
         android:src="@android:drawable/ic_input_add"
         app:borderWidth="0dp"
         app:elevation="6dp"
-/>
+    />
 </FrameLayout>
 

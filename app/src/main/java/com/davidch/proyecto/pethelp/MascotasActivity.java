@@ -69,15 +69,20 @@ public class MascotasActivity extends AppCompatActivity
     }
 
 
-    /*
+
     //opcion quitada de menu puesto floating button
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        /*
         getMenuInflater().inflate(R.menu.aniadirmascota,menu);
         return super.onCreateOptionsMenu(menu);
+        */
+        getMenuInflater().inflate(R.menu.nav_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+
     }
 
-
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -89,8 +94,12 @@ public class MascotasActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+
+
     }
     */
+
+
 
     @Override
     public void onMascotaClick(Mascota mascota) {
