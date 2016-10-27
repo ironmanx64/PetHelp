@@ -94,9 +94,7 @@ public class MascotasActivity extends AppCompatActivity
 
     @Override
     public void onMascotaClick(long id) {
-        Intent intent = new Intent(this, DescriptionPetActivity.class);
-        intent.putExtra("idMascota", id);
-        startActivity(intent);
+        DescriptionPetActivity.abrir(this, id);
     }
 
 
