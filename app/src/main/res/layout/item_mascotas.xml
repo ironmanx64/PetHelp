@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
+        android:textColor="@color/colorblanco"
         android:id="@+id/textViewnombremascota" />
 
     <ImageView

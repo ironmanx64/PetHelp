@@ -10,49 +10,67 @@
     tools:context=".RegistrationActivity"
     android:background="@drawable/paw">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="NICK"
-        android:ems="10"
-        android:id="@+id/editTextnickregistration"
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifview1login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/tumblr_puppy"
+        android:background="@drawable/patasyhuesos"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ingresar"
+        android:id="@+id/buttonregistation"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="52dp" />
+
     <EditText
+        style="@style/Theme.App.Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
+        android:textColorHint="@color/colorblanco"
         android:id="@+id/editTextpasswordregistration"
-        android:layout_below="@+id/editTextnickregistration"
-        android:layout_alignLeft="@+id/editTextnickregistration"
-        android:layout_alignStart="@+id/editTextnickregistration"
-        android:layout_marginTop="45dp"
-        android:text="Password" />
+        android:hint="Password"
+        android:layout_alignBottom="@+id/editTextemailregistration"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="40dp" />
 
     <EditText
+        style="@style/Theme.App.Base"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="NICK"
+        android:ems="10"
+        android:textColorHint="@color/colorblanco"
+        android:id="@+id/editTextnickregistration"
+        android:layout_alignBottom="@+id/editTextpasswordregistration"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="33dp" />
+
+    <EditText
+        style="@style/Theme.App.Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/editTextemailregistration"
-        android:layout_marginTop="52dp"
-        android:text="E-mail"
-        android:layout_below="@+id/editTextpasswordregistration"
-        android:layout_alignLeft="@+id/editTextpasswordregistration"
-        android:layout_alignStart="@+id/editTextpasswordregistration" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ingresar"
-        android:id="@+id/buttonregistation"
-        android:layout_below="@+id/editTextemailregistration"
-        android:layout_alignLeft="@+id/editTextemailregistration"
-        android:layout_alignStart="@+id/editTextemailregistration"
-        android:layout_marginTop="39dp" />
+        android:hint="E-mail"
+        android:textColorHint="@color/colorblanco"
+        android:layout_above="@+id/buttonregistation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="69dp" />
 
 </RelativeLayout>

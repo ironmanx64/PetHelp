@@ -8,9 +8,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.davidch.proyecto.pethelp.LoginActivity"
-    android:background="@drawable/paw">
+    android:background="@color/colorAccent">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifview1login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/tumblrdoggy"
+        android:background="@drawable/patasfondo"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
+        style="@style/Theme.App.Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
@@ -19,13 +31,14 @@
         android:hint="Nombre"
         android:ems="10"
         android:id="@+id/editTextNombrelogin"
+        android:layout_marginTop="143dp"
+        android:textColor="?attr/colorSwitchThumbNormal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:textIsSelectable="false"
-        android:textColor="?attr/colorSwitchThumbNormal" />
+        android:textIsSelectable="false" />
 
     <EditText
+        style="@style/Theme.App.Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
@@ -40,34 +53,39 @@
         android:layout_marginTop="36dp"
         android:textColor="?attr/colorSwitchThumbNormal" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/buttonaceptarlogin"
-        android:layout_below="@+id/editTextpasswordlogin"
-        android:layout_toLeftOf="@+id/progressBarlogin"
-        android:layout_toStartOf="@+id/progressBarlogin"
-        android:layout_marginTop="63dp" />
-
     <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleInverse"
+        android:progressDrawable="@drawable/paw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBarlogin"
-        android:layout_below="@+id/buttonaceptarlogin"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:indeterminate="true" />
+        android:layout_marginBottom="49dp" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrarse"
+        android:textColor="#ffffff"
         android:id="@+id/buttonregistrarselogin"
-        android:layout_above="@+id/progressBarlogin"
-        android:layout_alignRight="@+id/editTextpasswordlogin"
-        android:layout_alignEnd="@+id/editTextpasswordlogin" />
+        android:layout_alignBaseline="@+id/buttonaceptarlogin"
+        android:layout_alignBottom="@+id/buttonaceptarlogin"
+        android:layout_toLeftOf="@+id/progressBar1"
+        android:layout_toStartOf="@+id/progressBar1" />
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="#ffffff"
+        android:id="@+id/buttonaceptarlogin"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/editTextpasswordlogin"
+        android:layout_toRightOf="@+id/progressBar1"
+        android:layout_toEndOf="@+id/progressBar1" />
+
 
 </RelativeLayout>

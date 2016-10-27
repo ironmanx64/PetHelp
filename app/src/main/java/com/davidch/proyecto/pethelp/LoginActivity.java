@@ -1,7 +1,8 @@
 package com.davidch.proyecto.pethelp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +15,20 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText nombrelogin;
     private EditText passwordlogin;
+    //sonido sin clase
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.musicanimalia);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(10, 10);
+        mediaPlayer.start();
+
+
+
 
         Login login = new Login(this);
         if (login.isLogged()) {
@@ -57,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     private void loginmascotas (){
 
