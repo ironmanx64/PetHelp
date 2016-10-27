@@ -13,7 +13,7 @@ import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 public class PethelpContentProvider extends ContentProvider {
 
     public static final String AUTORITY = "com.davidch.proyecto.pethelp.datos";
-    public static final Uri BASE_URI = Uri.fromParts("content", AUTORITY, "");
+    public static final Uri BASE_URI = Uri.parse("content://" + AUTORITY + "/");
 
     public static Uri getUriMascotas() {
         return Uri.withAppendedPath(BASE_URI, "mascotas");
@@ -72,7 +72,6 @@ public class PethelpContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Uri no válida: " + uri);
         }
-        db.close();
         if (cont > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
@@ -91,7 +90,6 @@ public class PethelpContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Uri no válida: " + uri);
         }
-        db.close();
         Uri uriGenerada = Uri.withAppendedPath(uri, Long.toString(id));
         getContext().getContentResolver().notifyChange(uriGenerada, null);
         return uriGenerada;
@@ -110,7 +108,6 @@ public class PethelpContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Uri no válida: " + uri);
         }
-        db.close();
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }

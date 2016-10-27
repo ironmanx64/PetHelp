@@ -88,8 +88,9 @@ public class AniadirMascotaActivity extends AppCompatActivity
             intentSeleccionarImagen.setType("image/*");
             startActivityForResult(intentSeleccionarImagen, REQUEST_CODE_SELECCIONAR_IMAGEN);
         }else if(buttonanidirmascota==v){
-            String nombremascota=editTextnombremascota.getText().toString();
-            String apodomascota=editTextapodomascota.getText().toString();
+
+            String nombreMascota = editTextnombremascota.getText().toString();
+            String apodoMascota = editTextapodomascota.getText().toString();
 
 
 

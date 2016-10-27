@@ -18,34 +18,43 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        nombrelogin=(EditText)findViewById(R.id.editTextNombrelogin);
-        passwordlogin=(EditText)findViewById(R.id.editTextpasswordlogin);
-        Button buttonlogin=(Button) findViewById(R.id.buttonaceptarlogin);
-        Button buttonregistro=(Button) findViewById(R.id.buttonregistrarselogin);
+
+        Login login = new Login(this);
+        if (login.isLogged()) {
+
+            MascotasActivity.abrirMascotasActivity(this);
+        }
+        else {
+
+            setContentView(R.layout.activity_login);
+            nombrelogin = (EditText) findViewById(R.id.editTextNombrelogin);
+            passwordlogin = (EditText) findViewById(R.id.editTextpasswordlogin);
+            Button buttonlogin = (Button) findViewById(R.id.buttonaceptarlogin);
+            Button buttonregistro = (Button) findViewById(R.id.buttonregistrarselogin);
 
 
-        buttonregistro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            buttonregistro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-               Intent intent = new Intent(getBaseContext(),RegistrationActivity.class);
+                    Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
 
-               LoginActivity.this.startActivity(intent);
+                    LoginActivity.this.startActivity(intent);
 
-            }
-        });
+                }
+            });
 
 
-        buttonlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginmascotas();
+            buttonlogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loginmascotas();
 
 
                 }
 
-        });
+            });
+        }
 
     }
 
@@ -56,9 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
         new Login(this, nombre, password);
 
-        Intent mascotasActivity = new Intent(getBaseContext(), com.davidch.proyecto.pethelp.MascotasActivity.class);
-        startActivity(mascotasActivity);
-
+        MascotasActivity.abrirMascotasActivity(this);
     }
 
 

@@ -27,8 +27,12 @@ public class Login {
 
     public Login(Context context) {
         SharedPreferences preferencias = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-        nick = preferencias.getString("nick", "");
-        clave = preferencias.getString("clave", "");
+        nick = preferencias.getString("nick", null);
+        clave = preferencias.getString("clave", null);
+    }
+
+    public boolean isLogged() {
+        return nick != null && clave != null;
     }
 
     public String getBasicAuthToken() {

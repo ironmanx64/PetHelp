@@ -1,6 +1,7 @@
 package com.davidch.proyecto.pethelp.adaptadores;
 
 
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.davidch.proyecto.pethelp.R;
+import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
 
 import java.util.List;
@@ -18,19 +20,23 @@ import java.util.List;
  */
 public class MascotasAdapter extends RecyclerView.Adapter<MascotasAdapter.MascotaViewHolder> {
 
-    private List<Mascota> mascotas;
-    private OnMascotaClickListener listener;
+    public static final String [] PROYECCION_MASCOTAS = new String [] {
+            Mascotas.ID,
+            Mascotas.NOMBRE
+    };
 
-    public MascotasAdapter(List<Mascota> mascotas, OnMascotaClickListener listener) {
-        this.mascotas = mascotas;
-        this.listener = listener;
+    public interface OnMascotaClickListener {
+        void onMascotaClick(long id);
     }
 
-    public static class MascotaViewHolder extends RecyclerView.ViewHolder {
+    public class MascotaViewHolder extends RecyclerView.ViewHolder
+        implements View.OnClickListener {
 
         private TextView textViewNombre;
         private ImageView imageViewDuenio;
         private ImageView imageViewCuidador;
+
+        private long id;
 
         public MascotaViewHolder(View itemView) {
             super(itemView);
@@ -38,45 +44,67 @@ public class MascotasAdapter extends RecyclerView.Adapter<MascotasAdapter.Mascot
             textViewNombre = (TextView) itemView.findViewById(R.id.textViewnombremascota);
             imageViewDuenio = (ImageView) itemView.findViewById(R.id.imageViewduenio);
             imageViewCuidador = (ImageView) itemView.findViewById(R.id.imageViewcuidator);
+
+            itemView.setOnClickListener(this);
         }
-    }
 
-    private class MascotasAdapterOnClickListener implements View.OnClickListener {
-
-        private Mascota mascota;
-
-        public MascotasAdapterOnClickListener(Mascota mascota) {
-            this.mascota = mascota;
+        public void bind(Cursor cursor) {
+            id = cursor.getLong(0);
+            textViewNombre.setText(cursor.getString(1));
         }
 
         @Override
         public void onClick(View v) {
-            listener.onMascotaClick(mascota);
+            if (listener != null) {
+                listener.onMascotaClick(id);
+            }
         }
     }
 
-    public static interface OnMascotaClickListener {
-        void onMascotaClick(Mascota mascota);
+    private Cursor cursor;
+    private OnMascotaClickListener listener;
+
+    public MascotasAdapter(Cursor cursor, OnMascotaClickListener listener) {
+        this.cursor = cursor;
+        this.listener = listener;
     }
 
     @Override
     public MascotaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View raiz = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mascotas, parent, false);
         return new MascotaViewHolder(raiz);
     }
 
     @Override
     public int getItemCount() {
-        return mascotas.size();
+        if (cursor != null) {
+            return cursor.getCount();
+        }
+        else {
+            return 0;
+        }
     }
 
     @Override
     public void onBindViewHolder(MascotaViewHolder holder, int position) {
 
-        Mascota mascota = mascotas.get(position);
-        holder.textViewNombre.setText(mascota.getNombre());
-        MascotasAdapterOnClickListener clickListener = new MascotasAdapterOnClickListener(mascota);
-        holder.itemView.setOnClickListener(clickListener);
+        if (cursor == null) {
+            throw new IllegalStateException("cursor es null");
+        }
+
+        if (!cursor.moveToPosition(position)) {
+            throw new IllegalArgumentException("posicion no válida: " + position);
+        }
+
+        holder.bind(cursor);
     }
+
+    public void switchCursor(Cursor nuevoCursor) {
+        if (cursor != null) {
+            cursor.close();
+        }
+        cursor = nuevoCursor;
+        notifyDataSetChanged();
+    }
+
 }

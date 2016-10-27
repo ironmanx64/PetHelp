@@ -61,7 +61,7 @@ public class Mascota implements Parcelable {
 
     public static final List<Mascota> fromCursor(Cursor cursor) {
         List<Mascota> mascotas = new ArrayList<>();
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 mascotas.add(new Mascota(cursor));
             }

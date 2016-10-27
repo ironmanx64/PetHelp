@@ -25,7 +25,7 @@ public interface PetHelpServicio {
     Call<List<Mascota>> getMisMascotas();
 
     @POST("mascotas/sincronizar")
-    Call<List<Mascota>> sincronizarMascotas(Map<String, List<Mascota>> mascotas);
+    Call<List<Mascota>> sincronizarMascotas(@Body Map<String, List<Mascota>> mascotas);
 
     @GET("especies")
     Call<List<Especie>> getEspecies();

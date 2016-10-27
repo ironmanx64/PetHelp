@@ -14,7 +14,7 @@ import com.davidch.proyecto.pethelp.modelo.Mascota;
 public class PethelpSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String NOMBRE_BD = "pethelp.sqlite";
-    private static final int VERSION_BD = 1;
+    private static final int VERSION_BD = 2;
 
     public PethelpSQLiteOpenHelper(Context context) {
         super(context, NOMBRE_BD, null, VERSION_BD);
@@ -23,15 +23,25 @@ public class PethelpSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
-        db.execSQL(Mascotas.CREATE);
-        db.endTransaction();
+        try {
+            db.execSQL(Mascotas.CREATE);
+            db.setTransactionSuccessful();
+        }
+        finally {
+            db.endTransaction();
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.beginTransaction();
-        db.execSQL(Mascotas.DROP);
-        db.execSQL(Mascotas.CREATE);
-        db.endTransaction();
+        try {
+            db.execSQL(Mascotas.DROP);
+            db.execSQL(Mascotas.CREATE);
+            db.setTransactionSuccessful();
+        }
+        finally {
+            db.endTransaction();
+        }
     }
 }

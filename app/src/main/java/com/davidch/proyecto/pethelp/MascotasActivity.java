@@ -1,6 +1,6 @@
 package com.davidch.proyecto.pethelp;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
@@ -11,24 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
-import com.davidch.proyecto.pethelp.modelo.Login;
-import com.davidch.proyecto.pethelp.modelo.Mascota;
 import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
-import com.davidch.proyecto.pethelp.servicio.FactoriaServicio;
-import com.davidch.proyecto.pethelp.servicio.PetHelpServicio;
-
-import java.io.IOException;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.davidch.proyecto.pethelp.sincronizacion.SincronizacionService;
 
 public class MascotasActivity extends AppCompatActivity
         implements
@@ -37,12 +25,13 @@ public class MascotasActivity extends AppCompatActivity
 
     public static final int LOADER_MASCOTAS = 1;
 
-    private static final String [] PROYECCION_MASCOTAS = new String [] {
+    private MascotasAdapter adapter;
 
-    };
-
-    private RecyclerView recyclerView;
-    private FloatingActionButton botonflotantemascotas;
+    public static void abrirMascotasActivity(Context context) {
+        Intent intent = new Intent(context, MascotasActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +39,24 @@ public class MascotasActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_mascotas);
 
-        recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
-        botonflotantemascotas=(FloatingActionButton)findViewById(R.id.buttonfloatingmascotas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotas);
+        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
 
+        adapter = new MascotasAdapter(null, this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         botonflotantemascotas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentmascotadescrip = new Intent (getBaseContext(),AniadirMascotaActivity.class);
-
                 startActivity(intentmascotadescrip);
             }
         });
 
-
-        //getSupportLoaderManager().initLoader(LOADER_MASCOTAS, null, this);
+        SincronizacionService.startService(this);
+        getSupportLoaderManager().initLoader(LOADER_MASCOTAS, null, this);
     }
 
 
@@ -102,30 +93,28 @@ public class MascotasActivity extends AppCompatActivity
 
 
     @Override
-    public void onMascotaClick(Mascota mascota) {
+    public void onMascotaClick(long id) {
         Intent intent = new Intent(this, DescriptionPetActivity.class);
-        intent.putExtra("mascota", mascota);
+        intent.putExtra("idMascota", id);
         startActivity(intent);
     }
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        /*
         CursorLoader loader = new CursorLoader(this);
         loader.setUri(PethelpContentProvider.getUriMascotas());
-        loader.setProjection();
-        */
-        return null;
+        loader.setProjection(MascotasAdapter.PROYECCION_MASCOTAS);
+        return loader;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+        adapter.switchCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        adapter.switchCursor(null);
     }
 }

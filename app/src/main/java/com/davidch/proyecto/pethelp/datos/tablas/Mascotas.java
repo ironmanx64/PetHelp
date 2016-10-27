@@ -35,6 +35,7 @@ public class Mascotas extends Tabla {
             "CREATE TABLE " + TABLA + " (" +
                     ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NOMBRE + " VARCHAR(45) DEFAULT NULL, " +
+                    APODO + " VARCHAR(45) DEFAULT NULL, " +
                     SEXO + " CHAR(1) DEFAULT NULL, " +
                     FECHA_REPRODUCCION + " DATE DEAFULT NULL, " +
                     FECHA_NACIMIENTO + " DATE DEFAULT NULL, " +
