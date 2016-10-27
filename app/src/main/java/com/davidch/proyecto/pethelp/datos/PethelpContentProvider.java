@@ -18,14 +18,19 @@ public class PethelpContentProvider extends ContentProvider {
     public static Uri getUriMascotas() {
         return Uri.withAppendedPath(BASE_URI, "mascotas");
     }
+    public static Uri getUriMascota(long id) {
+        return Uri.withAppendedPath(getUriMascotas(), Long.toString(id));
+    }
 
     private static final UriMatcher URI_MATCHER;
     private static final int URI_NOENCONTRADA = -1;
     private static final int URI_MASCOTAS = 1;
+    private static final int URI_MASCOTA = 2;
 
     static {
         URI_MATCHER = new UriMatcher(URI_NOENCONTRADA);
         URI_MATCHER.addURI(AUTORITY, "mascotas", URI_MASCOTAS);
+        URI_MATCHER.addURI(AUTORITY, "mascotas/#", URI_MASCOTA);
     }
 
     private SQLiteOpenHelper sqliteOpenHelper;
@@ -104,6 +109,15 @@ public class PethelpContentProvider extends ContentProvider {
         switch (URI_MATCHER.match(uri)) {
             case URI_MASCOTAS:
                 cursor = db.query(Mascotas.TABLA, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case URI_MASCOTA:
+                cursor = db.query(
+                        Mascotas.TABLA,
+                        projection,
+                        Mascotas.ID + "=?",
+                        new String [] {
+                                uri.getLastPathSegment()
+                        }, null, null, sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Uri no válida: " + uri);
