@@ -10,22 +10,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.davidch.proyecto.pethelp.modelo.Login;
+import com.davidch.proyecto.pethelp.servicio.IntentServicemusicaanimalia;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText nombrelogin;
     private EditText passwordlogin;
-    //sonido sin clase
-    MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mediaPlayer = MediaPlayer.create(this, R.raw.musicanimalia);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(10, 10);
-        mediaPlayer.start();
 
 
 
@@ -38,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         else {
 
             setContentView(R.layout.activity_login);
+            IntentServicemusicaanimalia.startMusica(getBaseContext());
             nombrelogin = (EditText) findViewById(R.id.editTextNombrelogin);
             passwordlogin = (EditText) findViewById(R.id.editTextpasswordlogin);
             Button buttonlogin = (Button) findViewById(R.id.buttonaceptarlogin);

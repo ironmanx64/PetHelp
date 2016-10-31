@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.Looper;
+import android.media.MediaPlayer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -23,6 +24,7 @@ import android.view.View;
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
+import com.davidch.proyecto.pethelp.servicio.IntentServicemusicaanimalia;
 import com.davidch.proyecto.pethelp.sincronizacion.SincronizacionService;
 
 public class MascotasActivity extends AppCompatActivity
@@ -36,6 +38,9 @@ public class MascotasActivity extends AppCompatActivity
 
     private AsyncQueryHandler accionesDatos;
 
+
+
+
     public static void abrirMascotasActivity(Context context) {
         Intent intent = new Intent(context, MascotasActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -46,9 +51,13 @@ public class MascotasActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         setContentView(R.layout.activity_mascotas);
 
         accionesDatos = new AsyncQueryHandler(getContentResolver()) {};
+
+        IntentServicemusicaanimalia.startMusica(getBaseContext());
 
         FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotas);
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
