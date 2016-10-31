@@ -1,8 +1,11 @@
 package com.davidch.proyecto.pethelp;
 
+import android.content.AsyncQueryHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -11,11 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
+import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.sincronizacion.SincronizacionService;
 
 public class MascotasActivity extends AppCompatActivity
@@ -26,6 +33,8 @@ public class MascotasActivity extends AppCompatActivity
     public static final int LOADER_MASCOTAS = 1;
 
     private MascotasAdapter adapter;
+
+    private AsyncQueryHandler accionesDatos;
 
     public static void abrirMascotasActivity(Context context) {
         Intent intent = new Intent(context, MascotasActivity.class);
@@ -38,6 +47,8 @@ public class MascotasActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_mascotas);
+
+        accionesDatos = new AsyncQueryHandler(getContentResolver()) {};
 
         FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotas);
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
@@ -97,6 +108,34 @@ public class MascotasActivity extends AppCompatActivity
         DescriptionPetActivity.abrir(this, id);
     }
 
+    @Override
+    public void onMascotaLongClick(long id) {
+        startActionMode(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                new MenuInflater(MascotasActivity.this).inflate(R.menu.gestion_macotas, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                if (item.getItemId() == R.id.menuItemBorrar) {
+
+                }
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                adapter.salirDeSeleccion();
+            }
+        });
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

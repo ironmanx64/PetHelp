@@ -25,6 +25,10 @@ public class Mascota implements Parcelable {
     private Date fechaNacimiento;
     private long idFamilia;
 
+    private boolean actualizado;
+    private boolean insertado;
+    private boolean borrado;
+
     public Mascota() {
     }
 
@@ -36,6 +40,9 @@ public class Mascota implements Parcelable {
         fechaReproduccion = Mascotas.dateFromSQL(c.getString(4));
         fechaNacimiento = Mascotas.dateFromSQL(c.getString(5));
         idFamilia = c.getInt(6);
+        actualizado = c.getInt(7) == 1;
+        insertado = c.getInt(8) == 1;
+        borrado = c.getInt(9) == 1;
     }
 
     public Mascota(long idMascota, String nombre, String apodo, char sexo, Date fechaReproduccion,
@@ -109,6 +116,18 @@ public class Mascota implements Parcelable {
         dest.writeLong(idFamilia);
     }
 
+    public void setApodo(String apodo) {
+        this.apodo = apodo;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public void setFechaReproduccion(Date fechaReproduccion) {
+        this.fechaReproduccion = fechaReproduccion;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -122,6 +141,14 @@ public class Mascota implements Parcelable {
         cv.put(Mascotas.FECHA_NACIMIENTO, Tabla.dateToSQL(fechaNacimiento));
         cv.put(Mascotas.FECHA_REPRODUCCION, Tabla.dateToSQL(fechaReproduccion));
         cv.put(Mascotas.ID_FAMILIA, idFamilia);
+        cv.put(Mascotas.ACTUALIZADO, actualizado);
+        cv.put(Mascotas.INSERTADO, insertado);
+        cv.put(Mascotas.BORRADO, borrado);
         return cv;
     }
+
+    public void esNueva() {
+        insertado = true;
+    }
+
 }
