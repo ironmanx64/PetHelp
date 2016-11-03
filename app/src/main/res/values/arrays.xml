@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Tags">
+        <item>hamster1</item>
+        <item>hamster2</item>
+        <item>hamster3</item>
+        <item>hamster4</item>
+        <item>hamster5</item>
+        <item>hamster6</item>
+    </string-array>
+</resources>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.davidch.proyecto.pethelp.EditarmascotasActivity">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifview1login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/gifhmastercolumpio"
+        android:background="@drawable/patasfondo"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imagenVieweditarmascota"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/hamsterdibujoclipart" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="elegir foto"
+        android:id="@+id/button2elegirfotoeditarmascota"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="68dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextapodoeditarmascotas"
+        android:hint="Apodo Mascota"
+        android:layout_below="@+id/editText2nombreeditarmascotas"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/editText2nombreeditarmascotas"
+        android:layout_alignEnd="@+id/editText2nombreeditarmascotas" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editexteditarmascotafechanacimiento"
+        android:hint="FechaNacimiento"
+        android:layout_below="@+id/editTextapodoeditarmascotas"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/editTextapodoeditarmascotas"
+        android:layout_alignEnd="@+id/editTextapodoeditarmascotas" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2nombreeditarmascotas"
+        android:hint="Nombre Mascota"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="editar mascota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttoneditareditarmascota"
+        android:layout_alignBaseline="@+id/button2elegirfotoeditarmascota"
+        android:layout_alignBottom="@+id/button2elegirfotoeditarmascota"
+        android:layout_toLeftOf="@+id/button3anidirfotoanidireditaron2elegirfotoeditarmascota"
+        android:layout_toStartOf="@+id/button3anidirfotoanidireditaron2elegirfotoeditarmascota" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="añadir foto"
+        android:id="@+id/button3anidirfotoanidireditaron2elegirfotoeditarmascota"
+        android:layout_alignBaseline="@+id/buttoneditareditarmascota"
+        android:layout_alignBottom="@+id/buttoneditareditarmascota"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editexteditarmascotafechareproduccion"
+        android:hint="Fecha Reproduccion"
+        android:layout_below="@+id/editexteditarmascotafechanacimiento"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerespicieseditarmascota"
+        android:layout_above="@+id/button2elegirfotoeditarmascota"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerfamiliaeditarmascota"
+        android:layout_above="@+id/spinnerespicieseditarmascota"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnergenerospinnereditarmascota"
+        android:layout_above="@+id/spinnerfamiliaeditarmascota"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerclaseanidirmascota"
+        android:layout_above="@+id/spinnergenerospinnereditarmascota"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
