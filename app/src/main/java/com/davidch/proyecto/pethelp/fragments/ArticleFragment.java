@@ -17,7 +17,7 @@ public class ArticleFragment extends Fragment {
     public static final String ARG_ARTICLES_NUMBER = "articles_number";
 
     public ArticleFragment() {
-        // Constructor vacío obligatorio
+        // Constructor vacío
     }
 
     @Override
@@ -28,8 +28,8 @@ public class ArticleFragment extends Fragment {
         String article = getResources().getStringArray(R.array.Tags)[i];
 
         getActivity().setTitle(article);
-        TextView headline = (TextView)rootView.findViewById(R.id.headline);
-        headline.append(" "+article);
+        TextView headline = (TextView) rootView.findViewById(R.id.headline);
+        headline.append(" " + article);
 
         return rootView;
     }
