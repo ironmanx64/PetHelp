@@ -4,18 +4,20 @@ import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by adeka on 31/10/2016.
  */
-
 public class AccionesMascota {
+
+    private static final String TAG = AccionesMascota.class.getName();
 
     private ContentResolver contentResolver;
 
@@ -23,23 +25,29 @@ public class AccionesMascota {
         this.contentResolver = contentResolver;
     }
 
-    public void borrar(List<Long> ids) {
+    public void borrar(final Collection<Long> ids) {
 
-        ArrayList<ContentProviderOperation> operaciones = new ArrayList<>();
-        for (Long id: ids) {
-            operaciones.add(ContentProviderOperation
-                    .newDelete(PethelpContentProvider.getUriMascotas())
-                    .withSelection(Mascotas.ID + " = ?", new String [] {id.toString()})
-                    .build());
-        }
+        new Thread() {
 
-        try {
-            contentResolver.applyBatch(PethelpContentProvider.AUTORITY, operaciones);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (OperationApplicationException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void run() {
+
+                ArrayList<ContentProviderOperation> operaciones = new ArrayList<>();
+                for (Long id: ids) {
+                    operaciones.add(ContentProviderOperation
+                            .newUpdate(PethelpContentProvider.getUriMascota(id))
+                            .withValue(Mascotas.BORRADO, true)
+                            .build());
+                }
+
+                try {
+                    contentResolver.applyBatch(PethelpContentProvider.AUTORITY, operaciones);
+                } catch (Exception e) {
+                    Log.w(TAG, "No se pudo realizar el borrado de mascotas", e);
+                }
+            }
+        }.start();
+
     }
 
 }

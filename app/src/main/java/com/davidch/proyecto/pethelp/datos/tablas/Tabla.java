@@ -13,6 +13,7 @@ public class Tabla {
     private static final SimpleDateFormat SQL_DATE_FORMAT = new SimpleDateFormat("yyyy-dd-mm");
 
     public static final String ID = "_id";
+    public static final String ID_SERVIDOR = "id_servidor";
     public static final String ACTUALIZADO = "actualizado";
     public static final String INSERTADO = "insertado";
     public static final String BORRADO = "borrado";

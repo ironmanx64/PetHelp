@@ -14,6 +14,7 @@ import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -156,4 +157,7 @@ public class MascotasAdapter extends RecyclerView.Adapter<MascotasAdapter.Mascot
         notifyDataSetChanged();
     }
 
+    public List<Long> getIdsSeleccionados() {
+        return new ArrayList<>(idsSeleccionados);
+    }
 }

@@ -17,6 +17,7 @@ public class Mascotas extends Tabla {
 
     public static final String [] PROYECCION_COMPLETA = {
             ID,
+            ID_SERVIDOR,
             NOMBRE,
             APODO,
             SEXO,
@@ -34,6 +35,7 @@ public class Mascotas extends Tabla {
     public static final String CREATE =
             "CREATE TABLE " + TABLA + " (" +
                     ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    ID_SERVIDOR + " INTEGER, " +
                     NOMBRE + " VARCHAR(45) DEFAULT NULL, " +
                     APODO + " VARCHAR(45) DEFAULT NULL, " +
                     SEXO + " CHAR(1) DEFAULT NULL, " +

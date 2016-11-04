@@ -23,6 +23,7 @@ import android.view.View;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
+import com.davidch.proyecto.pethelp.datos.acciones.AccionesMascota;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.servicio.IntentServicemusicaanimalia;
 import com.davidch.proyecto.pethelp.sincronizacion.SincronizacionService;
@@ -36,10 +37,7 @@ public class MascotasActivity extends AppCompatActivity
 
     private MascotasAdapter adapter;
 
-    private AsyncQueryHandler accionesDatos;
-
-
-
+    private AccionesMascota accionesMascota;
 
     public static void abrirMascotasActivity(Context context) {
         Intent intent = new Intent(context, MascotasActivity.class);
@@ -51,11 +49,9 @@ public class MascotasActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         setContentView(R.layout.activity_mascotas);
 
-        accionesDatos = new AsyncQueryHandler(getContentResolver()) {};
+        accionesMascota = new AccionesMascota(this.getContentResolver());
 
         IntentServicemusicaanimalia.startMusica(getBaseContext());
 
@@ -134,9 +130,11 @@ public class MascotasActivity extends AppCompatActivity
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 if (item.getItemId() == R.id.menuItemBorrar) {
-
+                    accionesMascota.borrar(adapter.getIdsSeleccionados());
+                    mode.finish();
+                    return true;
                 }
-                return true;
+                return false;
             }
 
             @Override
@@ -151,6 +149,7 @@ public class MascotasActivity extends AppCompatActivity
         CursorLoader loader = new CursorLoader(this);
         loader.setUri(PethelpContentProvider.getUriMascotas());
         loader.setProjection(MascotasAdapter.PROYECCION_MASCOTAS);
+        loader.setSelection(Mascotas.BORRADO + " = 0");
         return loader;
     }
 

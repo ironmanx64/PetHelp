@@ -129,6 +129,24 @@ public class PethelpContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        throw new UnsupportedOperationException();
+        SQLiteDatabase db = sqliteOpenHelper.getWritableDatabase();
+        int modificadas = 0;
+        switch (URI_MATCHER.match(uri)) {
+            case URI_MASCOTA:
+                 modificadas = db.update(
+                        Mascotas.TABLA,
+                        values,
+                        Mascotas.ID + "=?",
+                        new String [] {
+                                uri.getLastPathSegment()
+                        });
+                break;
+            default:
+                throw new IllegalArgumentException("Uri no válida: " + uri);
+        }
+        if (modificadas > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return modificadas;
     }
 }
