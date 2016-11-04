@@ -112,6 +112,46 @@ public class Mascota implements Parcelable {
         this.nombre = nombre;
     }
 
+    public String getApodo() {
+        return apodo;
+    }
+
+    public void setApodo(String apodo) {
+        this.apodo = apodo;
+    }
+
+    public char getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Date getFechaReproduccion() {
+        return fechaReproduccion;
+    }
+
+    public void setFechaReproduccion(Date fechaReproduccion) {
+        this.fechaReproduccion = fechaReproduccion;
+    }
+
+    public long getIdFamilia() {
+        return idFamilia;
+    }
+
+    public void setIdFamilia(long idFamilia) {
+        this.idFamilia = idFamilia;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(idMascota);

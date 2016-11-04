@@ -48,16 +48,16 @@ public class AniadirMascotaActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aniadir_mascota);
         imageViewmascota = (ImageView) findViewById(R.id.imagenViewanidirmascota);
-        editTextnombremascota = (EditText) findViewById(R.id.editText2nombreanidirmascotas);
-        editTextFechaNacimiento = (EditText) findViewById(R.id.editTextFechaNacimiento);
-        editTextFechaReproduccion = (EditText) findViewById(R.id.editTextFechaReproduccion);
+        editTextnombremascota = (EditText) findViewById(R.id.editText2nombreeditarmascotas);
+        editTextFechaNacimiento = (EditText) findViewById(R.id.editarmascotafechanacimientoeditext);
+        editTextFechaReproduccion = (EditText) findViewById(R.id.editarmascotafechareproduccioneditext);
         spinnerespecies = (Spinner) findViewById(R.id.spinnerespiciesaniadirmascota);
         buttonanidirmascotaimagen = (Button) findViewById(R.id.button3anidirfotoanidirmascota);
-        buttonelegirmascotaimagen = (Button) findViewById(R.id.button2elegirfotoanidirmascota);
+        buttonelegirmascotaimagen = (Button) findViewById(R.id.button2elegirfotoeditarmascota);
 
-        buttonAniadirMascota = (Button) findViewById(R.id.buttonAniadirMascota);
+        buttonAniadirMascota = (Button) findViewById(R.id.buttoneditareditarmascota);
 
-        editTextapodomascota = (EditText)findViewById(R.id.editTextapodo);
+        editTextapodomascota = (EditText)findViewById(R.id.editTextapodoanidirmascotas;
 
         buttonelegirmascotaimagen.setOnClickListener(this);
         buttonAniadirMascota.setOnClickListener(this);
