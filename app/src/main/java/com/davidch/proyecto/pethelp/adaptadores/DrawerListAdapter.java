@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.davidch.proyecto.pethelp.R;
 import com.davidch.proyecto.pethelp.modelovista.DrawerItem;
 
@@ -17,17 +18,18 @@ import java.util.List;
  * Created by hp on 31/10/2016.
  */
 
-public class DrawerListAdapter extends ArrayAdapter {
+public class DrawerListAdapter extends ArrayAdapter<DrawerItem> {
 
-    public DrawerListAdapter(Context context, List objects) {
+
+    public DrawerListAdapter(Context context, List<DrawerItem> objects) {
         super(context, 0, objects);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater)parent.getContext().
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) parent.getContext().
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.drawer_list_item, null);
         }
@@ -36,9 +38,10 @@ public class DrawerListAdapter extends ArrayAdapter {
         ImageView icon = (ImageView) convertView.findViewById(R.id.icon);
         TextView name = (TextView) convertView.findViewById(R.id.name);
 
-        DrawerItem item = (DrawerItem) getItem(position);
+        DrawerItem item = getItem(position);
         icon.setImageResource(item.getIconId());
         name.setText(item.getName());
+
 
         return convertView;
     }

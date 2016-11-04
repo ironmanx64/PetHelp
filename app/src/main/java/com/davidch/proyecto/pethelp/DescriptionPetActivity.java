@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.StrictMode;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -51,6 +53,16 @@ public class DescriptionPetActivity extends AppCompatActivity
         Bundle args = new Bundle();
         args.putLong(PARAMETRO_ID_MASCOTA, idMascota);
         getSupportLoaderManager().initLoader(LOADER_MASCOTA, args, this);
+
+        FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotasdescripcion);
+
+        botonflotantemascotas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentmascotadescrip = new Intent (getBaseContext(),AniadirMascotaActivity.class);
+                startActivity(intentmascotadescrip);
+            }
+        });
     }
 
 
