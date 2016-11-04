@@ -23,7 +23,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imagenVieweditarmascota"
+        android:id="@+id/imageViewFotoMascota"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="elegir foto"
-        android:id="@+id/button2elegirfotoeditarmascota"
+        android:id="@+id/buttonElegirFotoMascota"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -45,31 +45,31 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextapodoeditarmascotas"
+        android:id="@+id/editTextApodoMascota"
         android:hint="Apodo Mascota"
-        android:layout_below="@+id/editText2nombreeditarmascotas"
+        android:layout_below="@+id/editTextNombreMascota"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editText2nombreeditarmascotas"
-        android:layout_alignEnd="@+id/editText2nombreeditarmascotas" />
+        android:layout_alignRight="@+id/editTextNombreMascota"
+        android:layout_alignEnd="@+id/editTextNombreMascota" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editexteditarmascotafechanacimiento"
+        android:id="@+id/editTextFechaNacimiento"
         android:hint="FechaNacimiento"
-        android:layout_below="@+id/editTextapodoeditarmascotas"
+        android:layout_below="@+id/editTextApodoMascota"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editTextapodoeditarmascotas"
-        android:layout_alignEnd="@+id/editTextapodoeditarmascotas" />
+        android:layout_alignRight="@+id/editTextApodoMascota"
+        android:layout_alignEnd="@+id/editTextApodoMascota" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2nombreeditarmascotas"
+        android:id="@+id/editTextNombreMascota"
         android:hint="Nombre Mascota"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -79,9 +79,9 @@
         android:text="editar mascota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttoneditareditarmascota"
-        android:layout_alignBaseline="@+id/button2elegirfotoeditarmascota"
-        android:layout_alignBottom="@+id/button2elegirfotoeditarmascota"
+        android:id="@+id/buttonAniadirMascota"
+        android:layout_alignBaseline="@+id/buttonElegirFotoMascota"
+        android:layout_alignBottom="@+id/buttonElegirFotoMascota"
         android:layout_toLeftOf="@+id/button3anidirfotoanidireditaron2elegirfotoeditarmascota"
         android:layout_toStartOf="@+id/button3anidirfotoanidireditaron2elegirfotoeditarmascota" />
 
@@ -91,8 +91,8 @@
         android:layout_height="wrap_content"
         android:text="añadir foto"
         android:id="@+id/button3anidirfotoanidireditaron2elegirfotoeditarmascota"
-        android:layout_alignBaseline="@+id/buttoneditareditarmascota"
-        android:layout_alignBottom="@+id/buttoneditareditarmascota"
+        android:layout_alignBaseline="@+id/buttonAniadirMascota"
+        android:layout_alignBottom="@+id/buttonAniadirMascota"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -101,9 +101,9 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editexteditarmascotafechareproduccion"
+        android:id="@+id/editTextFechaReproduccion"
         android:hint="Fecha Reproduccion"
-        android:layout_below="@+id/editexteditarmascotafechanacimiento"
+        android:layout_below="@+id/editTextFechaNacimiento"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -111,7 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerespicieseditarmascota"
-        android:layout_above="@+id/button2elegirfotoeditarmascota"
+        android:layout_above="@+id/buttonElegirFotoMascota"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="11dp" />

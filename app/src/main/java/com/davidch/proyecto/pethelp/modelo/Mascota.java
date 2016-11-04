@@ -116,10 +116,6 @@ public class Mascota implements Parcelable {
         return apodo;
     }
 
-    public void setApodo(String apodo) {
-        this.apodo = apodo;
-    }
-
     public char getSexo() {
         return sexo;
     }
@@ -130,10 +126,6 @@ public class Mascota implements Parcelable {
 
     public Date getFechaNacimiento() {
         return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public Date getFechaReproduccion() {
@@ -170,10 +162,6 @@ public class Mascota implements Parcelable {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public void setFechaReproduccion(Date fechaReproduccion) {
-        this.fechaReproduccion = fechaReproduccion;
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
+import com.davidch.proyecto.pethelp.modelo.Mascota;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,4 +51,13 @@ public class AccionesMascota {
 
     }
 
+    public void insertar(final Mascota mascota) {
+
+        new Thread() {
+            @Override
+            public void run() {
+                contentResolver.insert(PethelpContentProvider.getUriMascotas(), mascota.toContentValues());
+            }
+        }.start();
+    }
 }

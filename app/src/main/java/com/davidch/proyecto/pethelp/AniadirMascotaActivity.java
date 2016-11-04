@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.davidch.proyecto.pethelp.adaptadores.EspeciesAdapter;
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
+import com.davidch.proyecto.pethelp.datos.acciones.AccionesMascota;
 import com.davidch.proyecto.pethelp.modelo.Especie;
 import com.davidch.proyecto.pethelp.modelo.Login;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
@@ -32,39 +33,42 @@ public class AniadirMascotaActivity extends AppCompatActivity
         implements View.OnClickListener, Callback<List<Especie>> {
 
     public static final int REQUEST_CODE_SELECCIONAR_IMAGEN = 0;
-    private ImageView imageViewmascota;
-    private EditText editTextnombremascota;
-    private EditText editTextapodomascota;
+    private ImageView imageViewFotoMascota;
+    private EditText editTextNombreMascota;
+    private EditText editTextApodoMascota;
     private EditText editTextFechaNacimiento;
     private EditText editTextFechaReproduccion;
-    private Spinner spinnerespecies;
-    private Button buttonanidirmascotaimagen;
-    private Button buttonelegirmascotaimagen;
+    private Spinner spinnerEspecie;
+    private Button buttonElegirFotoMascota;
     private Button buttonAniadirMascota;
     private ArrayAdapter<Especie> adaptadorEspecies;
+
+    private AccionesMascota accionesMascota;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_aniadir_mascota);
-        imageViewmascota = (ImageView) findViewById(R.id.imagenViewanidirmascota);
-        editTextnombremascota = (EditText) findViewById(R.id.editText2nombreeditarmascotas);
-        editTextFechaNacimiento = (EditText) findViewById(R.id.editarmascotafechanacimientoeditext);
-        editTextFechaReproduccion = (EditText) findViewById(R.id.editarmascotafechareproduccioneditext);
-        spinnerespecies = (Spinner) findViewById(R.id.spinnerespiciesaniadirmascota);
-        buttonanidirmascotaimagen = (Button) findViewById(R.id.button3anidirfotoanidirmascota);
-        buttonelegirmascotaimagen = (Button) findViewById(R.id.button2elegirfotoeditarmascota);
 
-        buttonAniadirMascota = (Button) findViewById(R.id.buttoneditareditarmascota);
+        accionesMascota = new AccionesMascota(getContentResolver());
 
-        editTextapodomascota = (EditText)findViewById(R.id.editTextapodoanidirmascotas;
+        imageViewFotoMascota = (ImageView) findViewById(R.id.imagenViewFotoMascota);
+        editTextNombreMascota = (EditText) findViewById(R.id.editTextNombreMascota);
+        editTextFechaNacimiento = (EditText) findViewById(R.id.editTextFechaNacimiento);
+        editTextFechaReproduccion = (EditText) findViewById(R.id.editTextFechaReproduccion);
+        editTextApodoMascota = (EditText)findViewById(R.id.editTextApodoMascota);
+        spinnerEspecie = (Spinner) findViewById(R.id.spinnerEspecie);
+        imageViewFotoMascota = (ImageView) findViewById(R.id.imagenViewFotoMascota);
 
-        buttonelegirmascotaimagen.setOnClickListener(this);
+        buttonElegirFotoMascota = (Button) findViewById(R.id.buttonElegirFotoMascota);
+        buttonAniadirMascota = (Button) findViewById(R.id.buttonAniadirMascota);
+
+        buttonElegirFotoMascota.setOnClickListener(this);
         buttonAniadirMascota.setOnClickListener(this);
 
-        adaptadorEspecies = new EspeciesAdapter(this,
-                new ArrayList<Especie>());
-        spinnerespecies.setAdapter(adaptadorEspecies);
+        adaptadorEspecies = new EspeciesAdapter(this, new ArrayList<Especie>());
+        spinnerEspecie.setAdapter(adaptadorEspecies);
 
         FactoriaServicio.getPetHelpServicio(new Login(this))
                 .getEspecies()
@@ -89,24 +93,23 @@ public class AniadirMascotaActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        if(buttonanidirmascotaimagen==v) {
+        if (buttonElegirFotoMascota == v) {
             Intent intentSeleccionarImagen = new Intent(Intent.ACTION_GET_CONTENT);
             intentSeleccionarImagen.setType("image/*");
             startActivityForResult(intentSeleccionarImagen, REQUEST_CODE_SELECCIONAR_IMAGEN);
-        }else if(buttonAniadirMascota==v) {
+        } else if (buttonAniadirMascota == v) {
 
             Mascota mascota = new Mascota();
 
-            mascota.setNombre(editTextnombremascota.getText().toString());
-            mascota.setApodo(editTextapodomascota.getText().toString());
+            mascota.setNombre(editTextNombreMascota.getText().toString());
+            mascota.setApodo(editTextApodoMascota.getText().toString());
             FmtFecha fmtFecha = new FmtFecha(this);
             mascota.setFechaNacimiento(fmtFecha.desde(editTextFechaNacimiento.getText().toString()));
             mascota.setFechaReproduccion(fmtFecha.desde(editTextFechaReproduccion.getText().toString()));
 
             mascota.esNueva();
 
-            AsyncQueryHandler insertQH = new AsyncQueryHandler(getContentResolver()) {};
-            insertQH.startInsert(0, null, PethelpContentProvider.getUriMascotas(), mascota.toContentValues());
+            accionesMascota.insertar(mascota);
         }
     }
 
