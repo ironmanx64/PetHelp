@@ -45,33 +45,9 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextFechaNacimiento"
-        android:hint="FechaNacimiento"
-        android:layout_below="@+id/editTextApodoMascota"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editTextApodoMascota"
-        android:layout_alignEnd="@+id/editTextApodoMascota" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/editTextNombreMascota"
         android:hint="Nombre Mascota"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextFechaReproduccion"
-        android:hint="Fecha Reproduccion"
-        android:layout_below="@+id/editTextFechaNacimiento"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -109,23 +85,43 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:text="editar mascota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAniadirMascota"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="elegir foto"
         android:id="@+id/buttonElegirFotoMascota"
-        android:layout_marginBottom="69dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="editar mascota"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonAniadirMascota"
-        android:layout_below="@+id/spinnerespicieseditarmascota"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextFechaNacimiento"
+        android:hint="FechaNacimiento"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextFechaReproduccion"
+        android:hint="Fecha Reproduccion"
+        android:layout_below="@+id/editTextFechaNacimiento"
+        android:layout_alignLeft="@+id/editTextFechaNacimiento"
+        android:layout_alignStart="@+id/editTextFechaNacimiento" />
 
 </RelativeLayout>

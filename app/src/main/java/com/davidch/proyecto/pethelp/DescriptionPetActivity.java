@@ -54,12 +54,12 @@ public class DescriptionPetActivity extends AppCompatActivity
         args.putLong(PARAMETRO_ID_MASCOTA, idMascota);
         getSupportLoaderManager().initLoader(LOADER_MASCOTA, args, this);
 
-        FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotasdescripcion);
+        FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotasedescripcion);
 
         botonflotantemascotas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentmascotadescrip = new Intent (getBaseContext(),AniadirMascotaActivity.class);
+                Intent intentmascotadescrip = new Intent (getBaseContext(),EditarmascotasActivity.class);
                 startActivity(intentmascotadescrip);
             }
         });

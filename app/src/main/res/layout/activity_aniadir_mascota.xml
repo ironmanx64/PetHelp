@@ -56,16 +56,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="añadir foto"
-        android:id="@+id/imageViewFotoMascota"
-        android:layout_alignBottom="@+id/buttonAniadirMascota"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,9 +121,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonAniadirMascota"
-        android:layout_alignBaseline="@+id/buttonElegirFotoMascota"
-        android:layout_alignBottom="@+id/buttonElegirFotoMascota"
-        android:layout_toLeftOf="@+id/imagenViewFotoMascota"
-        android:layout_toStartOf="@+id/imagenViewFotoMascota" />
+        android:layout_below="@+id/spinnerEspecie"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

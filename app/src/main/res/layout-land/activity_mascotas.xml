@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context="com.davidch.proyecto.pethelp.MascotasActivity">
+
+    <FrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" >
+
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gifview1login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/tumblr_lenguaperro"
+            android:background="@drawable/patasyhuesos"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/reclicerview"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/buttonfloatingmascotas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@android:drawable/ic_input_add"
+            app:borderWidth="0dp"
+            app:elevation="6dp" />
+
+    </FrameLayout>
+
+    <android.support.design.widget.NavigationView
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+</android.support.v4.widget.DrawerLayout>

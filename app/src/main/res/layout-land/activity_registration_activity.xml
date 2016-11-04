@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RegistrationActivity"
-    android:background="@drawable/paw">
+    android:background="@drawable/fondoperrogris">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifview1login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/tumblrdoggy"
+        android:background="@drawable/patasfondo"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
+        android:textColor="?attr/colorSwitchThumbNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
@@ -21,36 +30,58 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
+        android:textColor="?attr/colorSwitchThumbNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editTextpasswordregistration"
+        android:text="Password"
         android:layout_below="@+id/editTextnickregistration"
         android:layout_alignLeft="@+id/editTextnickregistration"
-        android:layout_alignStart="@+id/editTextnickregistration"
-        android:layout_marginTop="45dp"
-        android:text="Password" />
+        android:layout_alignStart="@+id/editTextnickregistration" />
 
     <EditText
+        android:textColor="?attr/colorSwitchThumbNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/editTextemailregistration"
-        android:layout_marginTop="52dp"
         android:text="E-mail"
         android:layout_below="@+id/editTextpasswordregistration"
         android:layout_alignLeft="@+id/editTextpasswordregistration"
-        android:layout_alignStart="@+id/editTextpasswordregistration" />
+        android:layout_alignStart="@+id/editTextpasswordregistration"
+        android:layout_alignRight="@+id/editTextpasswordregistration"
+        android:layout_alignEnd="@+id/editTextpasswordregistration" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ingresar"
-        android:id="@+id/button"
-        android:layout_marginTop="34dp"
+        android:id="@+id/buttoningresarregistration"
         android:layout_below="@+id/editTextemailregistration"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/editTextemailregistration"
+        android:layout_alignStart="@+id/editTextemailregistration" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/avatarusuario"
+        android:id="@+id/imageviewregistration"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="elegir imagen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonelegirimagenregistration"
+        android:layout_below="@+id/editTextemailregistration"
+        android:layout_toRightOf="@+id/buttoningresarregistration"
+        android:layout_toEndOf="@+id/buttoningresarregistration" />
 
 </RelativeLayout>
