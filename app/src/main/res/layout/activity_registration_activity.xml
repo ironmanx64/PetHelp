@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,14 +9,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RegistrationActivity"
-    android:background="@drawable/paw">
+    android:background="@drawable/fondoperrogris">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifview1login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/tumblr_puppy"
-        android:background="@drawable/patasyhuesos"
+        android:src="@drawable/tumblrdoggy"
+        android:background="@drawable/patasfondo"
 
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -27,39 +28,23 @@
         android:layout_height="wrap_content"
         android:text="Ingresar"
         android:id="@+id/buttonregistation"
+        android:layout_marginBottom="53dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp" />
+        android:layout_alignRight="@+id/editTextemailregistration"
+        android:layout_alignEnd="@+id/editTextemailregistration" />
 
-    <EditText
-        style="@style/Theme.App.Base"
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Elegir foto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:textColorHint="@color/colorblanco"
-        android:id="@+id/editTextpasswordregistration"
-        android:hint="Password"
-        android:layout_alignBottom="@+id/editTextemailregistration"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="40dp" />
+        android:layout_alignBottom="@+id/buttonregistation"
+        android:layout_toRightOf="@+id/buttonregistation"
+        android:layout_toEndOf="@+id/buttonregistation"
+        android:id="@+id/button3" />
 
     <EditText
-        style="@style/Theme.App.Base"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="NICK"
-        android:ems="10"
-        android:textColorHint="@color/colorblanco"
-        android:id="@+id/editTextnickregistration"
-        android:layout_alignBottom="@+id/editTextpasswordregistration"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="33dp" />
-
-    <EditText
+        android:textColor="?attr/colorSwitchThumbNormal"
         style="@style/Theme.App.Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,9 +53,48 @@
         android:id="@+id/editTextemailregistration"
         android:hint="E-mail"
         android:textColorHint="@color/colorblanco"
+        android:layout_marginBottom="107dp"
         android:layout_above="@+id/buttonregistation"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="69dp" />
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:textColor="?attr/colorSwitchThumbNormal"
+        style="@style/Theme.App.Base"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:textColorHint="@color/colorblanco"
+        android:id="@+id/editTextpasswordregistration"
+        android:hint="Password"
+        android:layout_above="@+id/editTextemailregistration"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:textColor="?attr/colorSwitchThumbNormal"
+        style="@style/Theme.App.Base"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="NICK"
+        android:ems="10"
+        android:textColorHint="@color/colorblanco"
+        android:id="@+id/editTextnickregistration"
+        android:layout_marginBottom="12dp"
+        android:layout_above="@+id/editTextpasswordregistration"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/avatarusuario"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/imageviewregistration" />
+
 
 </RelativeLayout>
