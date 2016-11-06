@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.davidch.proyecto.pethelp.datos.tablas.Cuidadores;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
 
@@ -14,7 +15,7 @@ import com.davidch.proyecto.pethelp.modelo.Mascota;
 public class PethelpSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String NOMBRE_BD = "pethelp.sqlite";
-    private static final int VERSION_BD = 3;
+    private static final int VERSION_BD = 4;
 
     public PethelpSQLiteOpenHelper(Context context) {
         super(context, NOMBRE_BD, null, VERSION_BD);
@@ -25,6 +26,7 @@ public class PethelpSQLiteOpenHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             db.execSQL(Mascotas.CREATE);
+            db.execSQL(Cuidadores.CREATE);
             db.setTransactionSuccessful();
         }
         finally {
@@ -38,6 +40,8 @@ public class PethelpSQLiteOpenHelper extends SQLiteOpenHelper {
         try {
             db.execSQL(Mascotas.DROP);
             db.execSQL(Mascotas.CREATE);
+            db.execSQL(Cuidadores.DROP);
+            db.execSQL(Cuidadores.CREATE);
             db.setTransactionSuccessful();
         }
         finally {

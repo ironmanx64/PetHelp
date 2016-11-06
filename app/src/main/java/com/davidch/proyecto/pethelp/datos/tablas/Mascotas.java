@@ -30,7 +30,7 @@ public class Mascotas extends Tabla {
     };
 
     public static final String DROP =
-            "DROP TABLE " + TABLA;
+            "DROP TABLE IF EXISTS " + TABLA;
 
     public static final String CREATE =
             "CREATE TABLE " + TABLA + " (" +
