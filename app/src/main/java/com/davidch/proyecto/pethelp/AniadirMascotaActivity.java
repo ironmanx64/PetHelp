@@ -1,14 +1,19 @@
 package com.davidch.proyecto.pethelp;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.AsyncQueryHandler;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -22,8 +27,14 @@ import com.davidch.proyecto.pethelp.modelo.Mascota;
 import com.davidch.proyecto.pethelp.servicio.FactoriaServicio;
 import com.davidch.proyecto.pethelp.utilidades.FmtFecha;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -116,9 +127,35 @@ public class AniadirMascotaActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_SELECCIONAR_IMAGEN) {
+            Bitmap imagenmascota = (Bitmap) data.getExtras().get("data");
+            imageViewFotoMascota.setImageBitmap(imagenmascota);
 
         }
     }
+
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        Calendar calendarioDatePicker = new GregorianCalendar();
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+
+            calendarioDatePicker.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            calendarioDatePicker.set(Calendar.MONTH, monthOfYear);
+            calendarioDatePicker.set(Calendar.DAY_OF_MONTH, year);
+            updateLabel();
+        }
+
+        private void updateLabel() {
+            Date fechaDatePicker = calendarioDatePicker.getTime();
+
+            String dateString = DateFormat.getDateInstance().format(fechaDatePicker);
+
+            editTextFechaNacimiento.setText(dateString);
+        }
+
+    };
 
 
 

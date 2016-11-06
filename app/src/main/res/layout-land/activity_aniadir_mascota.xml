@@ -29,25 +29,6 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/hamsterdibujoclipart" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="elegir foto"
-        android:id="@+id/buttonElegirFotoMascota"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="68dp" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerEspecie"
-        android:layout_above="@+id/buttonElegirFotoMascota"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,38 +75,53 @@
         android:layout_alignRight="@+id/editTextNombreMascota"
         android:layout_alignEnd="@+id/editTextNombreMascota" />
 
-    <EditText
+    <Button
+        android:text="añadir mascota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:clickable="true"
-        android:id="@+id/editTextFechaNacimiento"
-        android:hint="FechaNacimiento"
-        android:layout_below="@+id/editTextApodoMascota"
+        android:id="@+id/buttonAniadirMascota"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="elegir foto"
+        android:id="@+id/buttonElegirFotoMascota"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:inputType="datetime"
-        android:allowUndo="false" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:clickable="true"
+        android:id="@+id/editTextFechaNacimiento"
+        android:hint="FechaNacimiento"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/buttonAniadirMascota"
+        android:layout_toStartOf="@+id/buttonAniadirMascota" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
         android:id="@+id/editTextFechaReproduccion"
         android:hint="Fecha Reproduccion"
         android:layout_below="@+id/editTextFechaNacimiento"
+        android:layout_alignLeft="@+id/editTextFechaNacimiento"
+        android:layout_alignStart="@+id/editTextFechaNacimiento" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerEspecie"
+        android:layout_above="@+id/buttonAniadirMascota"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="añadir mascota"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAniadirMascota"
-        android:layout_below="@+id/spinnerEspecie"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
