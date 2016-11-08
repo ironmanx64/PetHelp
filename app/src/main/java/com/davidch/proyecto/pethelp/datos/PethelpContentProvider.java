@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
+import com.davidch.proyecto.pethelp.datos.tablas.Cuidadores;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
+import com.davidch.proyecto.pethelp.modelo.Mascota;
 
 public class PethelpContentProvider extends ContentProvider {
 
@@ -22,15 +24,26 @@ public class PethelpContentProvider extends ContentProvider {
         return Uri.withAppendedPath(getUriMascotas(), Long.toString(id));
     }
 
+    public static Uri getUriCuidadores() {
+        return Uri.withAppendedPath(BASE_URI, "cuidadores");
+    }
+    public static Uri getUriCuidador(long id) {
+        return Uri.withAppendedPath(getUriMascotas(), Long.toString(id));
+    }
+
     private static final UriMatcher URI_MATCHER;
     private static final int URI_NOENCONTRADA = -1;
     private static final int URI_MASCOTAS = 1;
     private static final int URI_MASCOTA = 2;
+    private static final int URI_CUIDADORES = 3;
+    private static final int URI_CUIDADOR = 4;
 
     static {
         URI_MATCHER = new UriMatcher(URI_NOENCONTRADA);
         URI_MATCHER.addURI(AUTORITY, "mascotas", URI_MASCOTAS);
         URI_MATCHER.addURI(AUTORITY, "mascotas/#", URI_MASCOTA);
+        URI_MATCHER.addURI(AUTORITY, "cuidadores", URI_CUIDADORES);
+        URI_MATCHER.addURI(AUTORITY, "cuidadores/#", URI_CUIDADOR);
     }
 
     private SQLiteOpenHelper sqliteOpenHelper;
@@ -39,6 +52,19 @@ public class PethelpContentProvider extends ContentProvider {
     public boolean onCreate() {
         sqliteOpenHelper = new PethelpSQLiteOpenHelper(getContext());
         return true;
+    }
+
+    private String getTableFromUri(int uri) {
+        switch (uri) {
+            case URI_MASCOTA:
+            case URI_MASCOTAS:
+                return Mascotas.TABLA;
+            case URI_CUIDADOR:
+            case URI_CUIDADORES:
+                return Cuidadores.TABLA;
+            default:
+                throw new IllegalArgumentException("Código de uri no válido: " + uri);
+        }
     }
 
     @Override
@@ -88,9 +114,11 @@ public class PethelpContentProvider extends ContentProvider {
 
         SQLiteDatabase db = sqliteOpenHelper.getWritableDatabase();
         long id;
-        switch (URI_MATCHER.match(uri)) {
+        int codigoUri = URI_MATCHER.match(uri);
+        switch (codigoUri) {
             case URI_MASCOTAS:
-                id = db.insert(Mascotas.TABLA, null, values);
+            case URI_CUIDADORES:
+                id = db.insert(getTableFromUri(codigoUri), null, values);
                 break;
             default:
                 throw new IllegalArgumentException("Uri no válida: " + uri);
@@ -106,11 +134,14 @@ public class PethelpContentProvider extends ContentProvider {
 
         SQLiteDatabase db = sqliteOpenHelper.getReadableDatabase();
         Cursor cursor = null;
-        switch (URI_MATCHER.match(uri)) {
+        int codigoUri = URI_MATCHER.match(uri);
+        switch (codigoUri) {
             case URI_MASCOTAS:
-                cursor = db.query(Mascotas.TABLA, projection, selection, selectionArgs, null, null, sortOrder);
+            case URI_CUIDADORES:
+                cursor = db.query(getTableFromUri(codigoUri), projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case URI_MASCOTA:
+            case URI_CUIDADOR:
                 cursor = db.query(
                         Mascotas.TABLA,
                         projection,

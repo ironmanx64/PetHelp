@@ -21,7 +21,13 @@
         </activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MascotasActivity" />
-        <activity android:name=".DescriptionPetActivity" />
+        <activity
+            android:name=".DescriptionPetActivity"
+            android:parentActivityName=".MascotasActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MascotasActivity" />
+        </activity>
         <activity android:name=".AniadirMascotaActivity" />
         <activity android:name=".EditarmascotasActivity" />
 
@@ -37,7 +43,9 @@
 
         <service
             android:name=".servicio.IntentServicemusicaanimalia"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".CuidadoresMascotaActivity"></activity>
     </application>
 
 </manifest>
