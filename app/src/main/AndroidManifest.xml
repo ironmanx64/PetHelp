@@ -23,6 +23,7 @@
         <activity android:name=".MascotasActivity" />
         <activity android:name=".DescriptionPetActivity" />
         <activity android:name=".AniadirMascotaActivity" />
+        <activity android:name=".EditarmascotasActivity" />
 
         <service
             android:name=".sincronizacion.SincronizacionService"
