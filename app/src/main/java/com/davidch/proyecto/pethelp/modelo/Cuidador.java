@@ -45,7 +45,7 @@ public class Cuidador {
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Cuidadores.ID, idCuidador);
-        contentValues.put(Cuidadores.ID_SERVIDOR_MASCOTA, idServidorMascota);
+        contentValues.put(Cuidadores.ID_MASCOTA, idServidorMascota);
         contentValues.put(Cuidadores.NICK, nick);
         return contentValues;
     }

@@ -19,11 +19,8 @@ import java.util.List;
  */
 public class Mascota implements Parcelable {
 
-    @Expose(serialize = false, deserialize = false)
-    @SerializedName("id")
-    private long idMascota;
     @SerializedName("id_mascota")
-    private long idMascotaServidor;
+    private long idMascota;
     private String nombre;
     private String apodo;
     private char sexo;
@@ -42,21 +39,19 @@ public class Mascota implements Parcelable {
 
     public Mascota(Cursor c) {
         idMascota = c.getInt(0);
-        idMascotaServidor = c.getInt(1);
-        nombre = c.getString(2);
-        apodo = c.getString(3);
-        sexo = c.getString(4).charAt(0);
-        fechaReproduccion = Mascotas.dateFromSQL(c.getString(5));
-        fechaNacimiento = Mascotas.dateFromSQL(c.getString(6));
-        idFamilia = c.getInt(7);
-        actualizado = c.getInt(8) == 1;
-        insertado = c.getInt(9) == 1;
-        borrado = c.getInt(10) == 1;
+        nombre = c.getString(1);
+        apodo = c.getString(2);
+        sexo = c.getString(3).charAt(0);
+        fechaReproduccion = Mascotas.dateFromSQL(c.getString(4));
+        fechaNacimiento = Mascotas.dateFromSQL(c.getString(5));
+        idFamilia = c.getInt(6);
+        actualizado = c.getInt(7) == 1;
+        insertado = c.getInt(8) == 1;
+        borrado = c.getInt(9) == 1;
     }
 
     protected Mascota(Parcel in) {
         idMascota = in.readLong();
-        idMascotaServidor = in.readLong();
         nombre = in.readString();
         apodo = in.readString();
         sexo = (char)in.readInt();
@@ -94,14 +89,6 @@ public class Mascota implements Parcelable {
 
     public void setIdMascota(long idMascota) {
         this.idMascota = idMascota;
-    }
-
-    public long getIdMascotaServidor() {
-        return idMascotaServidor;
-    }
-
-    public void setIdMascotaServidor(long idMascotaServidor) {
-        this.idMascotaServidor = idMascotaServidor;
     }
 
     public String getNombre() {
@@ -147,7 +134,6 @@ public class Mascota implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(idMascota);
-        dest.writeLong(idMascotaServidor);
         dest.writeString(nombre);
         dest.writeString(apodo);
         dest.writeInt((int)sexo);
@@ -171,7 +157,7 @@ public class Mascota implements Parcelable {
 
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
-        cv.put(Mascotas.ID_SERVIDOR, idMascotaServidor);
+        cv.put(Mascotas.ID, idMascota);
         cv.put(Mascotas.NOMBRE, nombre);
         cv.put(Mascotas.APODO, apodo);
         cv.put(Mascotas.SEXO, Character.toString(sexo));

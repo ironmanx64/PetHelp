@@ -9,12 +9,12 @@ public class Cuidadores extends Tabla {
     public static final String TABLA = "cuidadores";
 
     public static final String NICK = "nick";
-    public static final String ID_SERVIDOR_MASCOTA = "id_mascota";
+    public static final String ID_MASCOTA = "id_mascota";
 
     public static final String [] PROYECCION_COMPLETA = {
             ID,
             NICK,
-            ID_SERVIDOR_MASCOTA
+            ID_MASCOTA
     };
 
     public static final String DROP =
@@ -24,7 +24,7 @@ public class Cuidadores extends Tabla {
             "CREATE TABLE " + TABLA + " (" +
                     ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NICK + " VARCHAR(45) DEFAULT NULL, " +
-                    ID_SERVIDOR_MASCOTA + " INTEGER, " +
+                    ID_MASCOTA + " INTEGER, " +
                     ACTUALIZADO + " BOOLEAN DEFAULT FALSE, " +
                     INSERTADO + " BOOLEAN DEFAULT FALSE, " +
                     BORRADO + " BOOLEAN DEFAULT FALSE" +

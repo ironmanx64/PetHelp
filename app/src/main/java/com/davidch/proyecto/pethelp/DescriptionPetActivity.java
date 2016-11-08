@@ -13,6 +13,8 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,11 +31,9 @@ public class DescriptionPetActivity extends AppCompatActivity
     implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_MASCOTA = 0;
-    private static final int LOADER_CUIDADORES = 1;
     private static final String PARAMETRO_ID_MASCOTA = "idMascota";
 
-    private SimpleCursorAdapter adapterCuidadores;
-
+    private long idMascota;
     private Mascota mascota = null;
 
     public static void abrir(Context context, long id) {
@@ -46,96 +46,52 @@ public class DescriptionPetActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final long idMascota = getIntent().getLongExtra(PARAMETRO_ID_MASCOTA, 0);
+        idMascota = getIntent().getLongExtra(PARAMETRO_ID_MASCOTA, 0);
 
-        setContentView(R.layout.activity_description_pet);
-        ImageView desPetImageview=(ImageView)findViewById(R.id.imageButtonPetDes);
-        Toolbar desPetToolbar=(Toolbar)findViewById(R.id.toolbarpetDes);
-        ListView listViewCuidadores =(ListView)findViewById(R.id.listViewCuidadores);
+        setContentView(R.layout.activity_descripcion_pet);
 
-        adapterCuidadores = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
-                null,
-                new String [] {Cuidadores.NICK},
-                new int [] {android.R.id.text1},
-                0);
-        listViewCuidadores.setAdapter(adapterCuidadores);
-
-        desPetToolbar.inflateMenu(R.menu.mascota_cuidadores);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle args = new Bundle();
         args.putLong(PARAMETRO_ID_MASCOTA, idMascota);
         getSupportLoaderManager().initLoader(LOADER_MASCOTA, args, this);
-
-        getSupportLoaderManager().initLoader(LOADER_CUIDADORES, null, this);
-
-        FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotasdescripcion);
-
-        botonflotantemascotas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mascota != null) {
-                    DialogFragment dialog = AniadirCuidadorDialogFragment.crear(idMascota);
-                    dialog.show(getSupportFragmentManager(), "aniadirCuidador");
-                }
-                else {
-                    Toast.makeText(DescriptionPetActivity.this, "Espera a que se carge la mascota", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mascota_cuidadores, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemCuidadores:
+                CuidadoresMascotaActivity.abrir(this, idMascota);
+                break;
+        }
+        return false;
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        switch (id) {
-            case LOADER_CUIDADORES:
-                return new CursorLoader(this,
-                        PethelpContentProvider.getUriCuidadores(),
-                        new String [] {Cuidadores.ID, Cuidadores.NICK},
-                        null, null, null);
-            case LOADER_MASCOTA:
-                long idMascota = args.getLong(PARAMETRO_ID_MASCOTA);
-                return new CursorLoader(this,
-                        PethelpContentProvider.getUriMascota(idMascota),
-                        Mascotas.PROYECCION_COMPLETA,
-                        null, null, null);
-            default:
-                throw new RuntimeException("Id de loader no válido: " + id);
-        }
+        long idMascota = args.getLong(PARAMETRO_ID_MASCOTA);
+        return new CursorLoader(this,
+                PethelpContentProvider.getUriMascota(idMascota),
+                Mascotas.PROYECCION_COMPLETA,
+                null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        switch (loader.getId()) {
-            case LOADER_CUIDADORES:
-                adapterCuidadores.swapCursor(data);
-                break;
-            case LOADER_MASCOTA:
-                if (data != null && data.moveToFirst()) {
-                    mascota = new Mascota(data);
-                    setTitle(mascota.getNombre());
-                }
-                else {
-                    onLoaderReset(loader);
-                }
-                break;
-            default:
-                throw new RuntimeException("Id de loader no válido");
+        if (data.moveToFirst()) {
+            mascota = new Mascota(data);
+            setTitle(mascota.getNombre());
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        switch (loader.getId()) {
-            case LOADER_CUIDADORES:
-                adapterCuidadores.swapCursor(null);
-                break;
-            case LOADER_MASCOTA:
-                setTitle("");
-                break;
-            default:
-                throw new RuntimeException("Id de loader no válido");
-        }
+        setTitle("");
     }
 }
