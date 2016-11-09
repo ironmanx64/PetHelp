@@ -31,6 +31,7 @@
                 android:value=".MascotasActivity" />
         </activity>
         <activity android:name=".AniadirMascotaActivity" />
+        <activity android:name=".EditarmascotasActivity" />
 
         <service
             android:name=".sincronizacion.SincronizacionService"
