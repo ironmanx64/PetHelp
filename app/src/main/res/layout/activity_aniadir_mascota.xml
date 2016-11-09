@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="elegir foto"
+        android:onClick="onClick"
         android:id="@+id/buttonElegirFotoMascota"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -99,22 +100,22 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:clickable="true"
-        android:onClick="onClickdatepickerfechanacimiento"
+        android:focusable="false"
         android:id="@+id/editTextFechaNacimiento"
         android:hint="FechaNacimiento"
         android:layout_below="@+id/editTextApodoMascota"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:inputType="datetime"
-        android:allowUndo="false" />
+         />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:onClick="onClickdatepickerfechareproducion"
+        android:inputType="datetime"
         android:ems="10"
         android:clickable="true"
+        android:focusable="false"
         android:id="@+id/editTextFechaReproduccion"
         android:hint="Fecha Reproduccion"
         android:layout_below="@+id/editTextFechaNacimiento"
@@ -122,7 +123,9 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:text="añadir mascota"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonAniadirMascota"
