@@ -2,11 +2,9 @@ package com.davidch.proyecto.pethelp;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.AsyncQueryHandler;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.davidch.proyecto.pethelp.adaptadores.EspeciesAdapter;
-import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.datos.acciones.AccionesMascota;
 import com.davidch.proyecto.pethelp.modelo.Especie;
 import com.davidch.proyecto.pethelp.modelo.Login;
@@ -53,6 +50,9 @@ public class AniadirMascotaActivity extends AppCompatActivity
     private Button buttonElegirFotoMascota;
     private Button buttonAniadirMascota;
     private ArrayAdapter<Especie> adaptadorEspecies;
+    private DatePickerDialog fromDatePickerDialognacimiento;
+    private DatePickerDialog fromDatePickerDialogreproducion;
+    private SimpleDateFormat dateFormatter;
 
     private AccionesMascota accionesMascota;
 
@@ -78,8 +78,13 @@ public class AniadirMascotaActivity extends AppCompatActivity
         buttonElegirFotoMascota.setOnClickListener(this);
         buttonAniadirMascota.setOnClickListener(this);
 
+        setDateTimeFieldfechanacimiento();
+        setDateTimeFieldfechareproduccion();
+
         adaptadorEspecies = new EspeciesAdapter(this, new ArrayList<Especie>());
         spinnerEspecie.setAdapter(adaptadorEspecies);
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         FactoriaServicio.getPetHelpServicio(new Login(this))
                 .getEspecies()
@@ -133,56 +138,49 @@ public class AniadirMascotaActivity extends AppCompatActivity
         }
     }
 
-    public void onClickdatepickerfechanacimiento(View v) {
-        DatePickerDialog.OnDateSetListener datenacimientodialog = new DatePickerDialog.OnDateSetListener() {
-            Calendar calendarioDatePicker = new GregorianCalendar();
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
 
-                calendarioDatePicker.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                calendarioDatePicker.set(Calendar.MONTH, monthOfYear);
-                calendarioDatePicker.set(Calendar.DAY_OF_MONTH, year);
-                updateLabel();
+
+
+    private void setDateTimeFieldfechanacimiento() {
+        editTextFechaNacimiento.setOnClickListener(this);
+
+        Calendar newCalendar = Calendar.getInstance();
+        fromDatePickerDialognacimiento = new DatePickerDialog(this, new OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                editTextFechaNacimiento.setText(dateFormatter.format(newDate.getTime()));
             }
 
-            private void updateLabel() {
-                Date fechaDatePicker = calendarioDatePicker.getTime();
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
-                String dateString = DateFormat.getDateInstance().format(fechaDatePicker);
+    };
 
-                editTextFechaNacimiento.setText(dateString);
+    private void setDateTimeFieldfechareproduccion() {
+        editTextFechaReproduccion.setOnClickListener(this);
+
+        Calendar newCalendar = Calendar.getInstance();
+        fromDatePickerDialogreproducion = new DatePickerDialog(this, new OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                editTextFechaNacimiento.setText(dateFormatter.format(newDate.getTime()));
             }
 
-        };
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+    };
+
+
+    public void onClickdatepickerfechanacimiento(View view) {
+        fromDatePickerDialognacimiento.show();
     }
 
     public void onClickdatepickerfechareproducion(View v) {
-        DatePickerDialog.OnDateSetListener datereproducciondialog = new DatePickerDialog.OnDateSetListener() {
-            Calendar calendarioDatePicker = new GregorianCalendar();
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-
-                calendarioDatePicker.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                calendarioDatePicker.set(Calendar.MONTH, monthOfYear);
-                calendarioDatePicker.set(Calendar.DAY_OF_MONTH, year);
-                updateLabel();
-            }
-
-            private void updateLabel() {
-                Date fechaDatePicker = calendarioDatePicker.getTime();
-
-                String dateString = DateFormat.getDateInstance().format(fechaDatePicker);
-
-                editTextFechaReproduccion.setText(dateString);
-            }
-
-        };
+        fromDatePickerDialogreproducion.show();
     }
 
 
