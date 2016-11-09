@@ -1,16 +1,21 @@
 package com.davidch.proyecto.pethelp.datos.acciones;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.util.Log;
 
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
+import com.davidch.proyecto.pethelp.datos.tablas.Cuidadores;
+import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.modelo.Cuidador;
 import com.davidch.proyecto.pethelp.modelo.Login;
 import com.davidch.proyecto.pethelp.servicio.FactoriaServicio;
 import com.davidch.proyecto.pethelp.servicio.PetHelpServicio;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -50,6 +55,29 @@ public class AccionesCuidador {
                 } catch (IOException e) {
                     Log.w(TAG, "Error al registrar cuidador", e);
                 }
+            }
+        }.start();
+    }
+
+    public void borrar(final List<Long> ids) {
+        new Thread() {
+            @Override
+            public void run() {
+
+                ArrayList<ContentProviderOperation> operaciones = new ArrayList<>();
+                for (Long id: ids) {
+                    operaciones.add(ContentProviderOperation
+                            .newUpdate(PethelpContentProvider.getUriCuidador(id))
+                            .withValue(Cuidadores.BORRADO, true)
+                            .build());
+                }
+
+                try {
+                    contentResolver.applyBatch(PethelpContentProvider.AUTORITY, operaciones);
+                } catch (Exception e) {
+                    Log.w(TAG, "No se pudo realizar el borrado del cuidador", e);
+                }
+
             }
         }.start();
     }

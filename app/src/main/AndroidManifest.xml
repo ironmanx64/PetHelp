@@ -35,10 +35,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".MascotasActivity" />
+        <activity android:name=".MascotasActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".DescriptionPetActivity"
-            android:parentActivityName=".MascotasActivity">
+            android:parentActivityName=".MascotasActivity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MascotasActivity" />
@@ -60,7 +62,6 @@
             android:name=".servicio.IntentServicemusicaanimalia"
             android:exported="false" />
 
-        <activity android:name=".CuidadoresMascotaActivity"></activity>
     </application>
 
 </manifest>

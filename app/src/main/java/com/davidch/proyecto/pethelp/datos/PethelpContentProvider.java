@@ -10,6 +10,7 @@ import android.net.Uri;
 
 import com.davidch.proyecto.pethelp.datos.tablas.Cuidadores;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
+import com.davidch.proyecto.pethelp.datos.tablas.Tabla;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
 
 public class PethelpContentProvider extends ContentProvider {
@@ -162,12 +163,14 @@ public class PethelpContentProvider extends ContentProvider {
                       String[] selectionArgs) {
         SQLiteDatabase db = sqliteOpenHelper.getWritableDatabase();
         int modificadas = 0;
-        switch (URI_MATCHER.match(uri)) {
+        int codigoUri = URI_MATCHER.match(uri);
+        switch (codigoUri) {
             case URI_MASCOTA:
+            case URI_CUIDADOR:
                  modificadas = db.update(
-                        Mascotas.TABLA,
+                        getTableFromUri(codigoUri),
                         values,
-                        Mascotas.ID + "=?",
+                        Tabla.ID + "=?",
                         new String [] {
                                 uri.getLastPathSegment()
                         });
