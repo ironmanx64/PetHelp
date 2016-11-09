@@ -22,13 +22,13 @@ public class Cuidadores extends Tabla {
 
     public static final String CREATE =
             "CREATE TABLE " + TABLA + " (" +
-                    ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    NICK + " VARCHAR(45) DEFAULT NULL, " +
+                    ID + " INTEGER, " +
                     ID_MASCOTA + " INTEGER, " +
+                    NICK + " VARCHAR(45) DEFAULT NULL, " +
                     ACTUALIZADO + " BOOLEAN DEFAULT FALSE, " +
                     INSERTADO + " BOOLEAN DEFAULT FALSE, " +
-                    BORRADO + " BOOLEAN DEFAULT FALSE" +
+                    BORRADO + " BOOLEAN DEFAULT FALSE, " +
+                    "PRIMARY KEY (" + ID + ", " + ID_MASCOTA + ") " +
                     ")";
-
 
 }

@@ -1,12 +1,8 @@
 package com.davidch.proyecto.pethelp;
 
-import android.content.AsyncQueryHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Handler;
-import android.os.Looper;
-import android.media.MediaPlayer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -118,7 +114,7 @@ public class MascotasActivity extends AppCompatActivity
         startActionMode(new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                new MenuInflater(MascotasActivity.this).inflate(R.menu.gestion_macotas, menu);
+                new MenuInflater(MascotasActivity.this).inflate(R.menu.gestion_mascotas, menu);
                 return true;
             }
 
