@@ -3,8 +3,13 @@ package com.davidch.proyecto.pethelp;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,12 +23,14 @@ import android.widget.Spinner;
 
 import com.davidch.proyecto.pethelp.adaptadores.EspeciesAdapter;
 import com.davidch.proyecto.pethelp.datos.acciones.AccionesMascota;
+import com.davidch.proyecto.pethelp.fragments.ElegirFotoMascotaDialogFragment;
 import com.davidch.proyecto.pethelp.modelo.Especie;
 import com.davidch.proyecto.pethelp.modelo.Login;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
 import com.davidch.proyecto.pethelp.servicio.FactoriaServicio;
 import com.davidch.proyecto.pethelp.utilidades.FmtFecha;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +48,7 @@ public class AniadirMascotaActivity extends AppCompatActivity
         implements View.OnClickListener, Callback<List<Especie>> {
 
     public static final int REQUEST_CODE_SELECCIONAR_IMAGEN = 0;
+    public static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 0;
     private ImageView imageViewFotoMascota;
     private EditText editTextNombreMascota;
     private EditText editTextApodoMascota;
@@ -75,11 +83,17 @@ public class AniadirMascotaActivity extends AppCompatActivity
         buttonElegirFotoMascota = (Button) findViewById(R.id.buttonElegirFotoMascota);
         buttonAniadirMascota = (Button) findViewById(R.id.buttonAniadirMascota);
 
-        buttonElegirFotoMascota.setOnClickListener(this);
-        buttonAniadirMascota.setOnClickListener(this);
+
 
         setDateTimeFieldfechanacimiento();
         setDateTimeFieldfechareproduccion();
+
+
+        buttonAniadirMascota.setOnClickListener(this);
+        buttonElegirFotoMascota.setOnClickListener(this);
+        editTextFechaReproduccion.setOnClickListener(this);
+        editTextFechaNacimiento.setOnClickListener(this);
+
 
         adaptadorEspecies = new EspeciesAdapter(this, new ArrayList<Especie>());
         spinnerEspecie.setAdapter(adaptadorEspecies);
@@ -110,9 +124,8 @@ public class AniadirMascotaActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if (buttonElegirFotoMascota == v) {
-            Intent intentSeleccionarImagen = new Intent(Intent.ACTION_GET_CONTENT);
-            intentSeleccionarImagen.setType("image/*");
-            startActivityForResult(intentSeleccionarImagen, REQUEST_CODE_SELECCIONAR_IMAGEN);
+            ElegirFotoMascotaDialogFragment elegirFotoMascotaDialogFragment = new ElegirFotoMascotaDialogFragment();
+            elegirFotoMascotaDialogFragment.show(getSupportFragmentManager(),"elegirfotomascota");
         } else if (buttonAniadirMascota == v) {
 
             Mascota mascota = new Mascota();
@@ -126,17 +139,38 @@ public class AniadirMascotaActivity extends AppCompatActivity
             mascota.esNueva();
 
             accionesMascota.insertar(mascota);
+        } else if (editTextFechaNacimiento == v) {
+            fromDatePickerDialognacimiento.show();
+        } else if (editTextFechaReproduccion == v) {
+            fromDatePickerDialogreproducion.show();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_SELECCIONAR_IMAGEN) {
-            Bitmap imagenmascota = (Bitmap) data.getExtras().get("data");
-            imageViewFotoMascota.setImageBitmap(imagenmascota);
+            Uri imagenmascotauridata = data.getData();
 
+            try {
+                Bitmap resizedimagenmascotauridata = Bitmap.createScaledBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), imagenmascotauridata), 100, 100, true);
+                imageViewFotoMascota.setImageBitmap(resizedimagenmascotauridata);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(resultCode == Activity.RESULT_OK && requestCode ==CAMERA_CAPTURE_IMAGE_REQUEST_CODE){
+            Uri imagenfotomascotauridata = data.getData();
+
+            try {
+                Bitmap resizedimagenfotomascotauridata = Bitmap.createScaledBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), imagenfotomascotauridata), 100, 100, true);
+                imageViewFotoMascota.setImageBitmap(resizedimagenfotomascotauridata);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+
 
 
 
@@ -167,23 +201,10 @@ public class AniadirMascotaActivity extends AppCompatActivity
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                editTextFechaNacimiento.setText(dateFormatter.format(newDate.getTime()));
+                editTextFechaReproduccion.setText(dateFormatter.format(newDate.getTime()));
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
     };
-
-
-    public void onClickdatepickerfechanacimiento(View view) {
-        fromDatePickerDialognacimiento.show();
-    }
-
-    public void onClickdatepickerfechareproducion(View v) {
-        fromDatePickerDialogreproducion.show();
-    }
-
-
-
-
 }
