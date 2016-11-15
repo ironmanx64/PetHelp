@@ -17,6 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+
+
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
 import com.davidch.proyecto.pethelp.datos.acciones.AccionesMascota;
@@ -64,6 +66,7 @@ public class MascotasActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intentmascotadescrip = new Intent (getBaseContext(),AniadirMascotaActivity.class);
                 startActivity(intentmascotadescrip);
+                overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
             }
         });
 
@@ -107,6 +110,7 @@ public class MascotasActivity extends AppCompatActivity
     @Override
     public void onMascotaClick(long id) {
         DescriptionPetActivity.abrir(this, id);
+
     }
 
     @Override

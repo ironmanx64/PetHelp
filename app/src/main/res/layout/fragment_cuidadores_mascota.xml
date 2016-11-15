@@ -11,6 +11,17 @@
     tools:context="com.davidch.proyecto.pethelp.fragments.CuidadoresMascotaFragment">
 
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifview1login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/perrogafas"
+        android:background="@drawable/patasyhuesos"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <ListView android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

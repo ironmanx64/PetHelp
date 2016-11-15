@@ -118,7 +118,7 @@ public class CuidadoresMascotaFragment extends ListFragment
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         if (item.getItemId() == R.id.menuItemBorrar) {
             long [] ids = getListView().getCheckedItemIds();
-            borrar los cuidadores
+
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package com.davidch.proyecto.pethelp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +13,8 @@ import android.view.MenuItem;
 
 import com.davidch.proyecto.pethelp.adaptadores.DetallesMascotaPagerAdapter;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
-import com.davidch.proyecto.pethelp.fragments.CuidadoresMascotaFragment;
+
+import static com.davidch.proyecto.pethelp.R.anim.zoom_forward_in;
 
 /**
  * Created by adeka on 09/11/2016.
@@ -20,10 +22,11 @@ import com.davidch.proyecto.pethelp.fragments.CuidadoresMascotaFragment;
 
 public class DescriptionPetActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    public static void abrir(Context context, long id) {
+    public static void abrir(Activity context, long id) {
         Intent intent = new Intent(context, com.davidch.proyecto.pethelp.DescriptionPetActivity.class);
         intent.putExtra(Mascotas.ID, id);
         context.startActivity(intent);
+        context.overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
     }
 
     private ActionMode actionMode;
