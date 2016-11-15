@@ -25,9 +25,9 @@ public class Cuidadores extends Tabla {
                     ID + " INTEGER, " +
                     ID_MASCOTA + " INTEGER, " +
                     NICK + " VARCHAR(45) DEFAULT NULL, " +
-                    ACTUALIZADO + " BOOLEAN DEFAULT FALSE, " +
-                    INSERTADO + " BOOLEAN DEFAULT FALSE, " +
-                    BORRADO + " BOOLEAN DEFAULT FALSE, " +
+                    ACTUALIZADO + " BOOLEAN DEFAULT 0, " +
+                    INSERTADO + " BOOLEAN DEFAULT 0, " +
+                    BORRADO + " BOOLEAN DEFAULT 0, " +
                     "PRIMARY KEY (" + ID + ", " + ID_MASCOTA + ") " +
                     ")";
 
