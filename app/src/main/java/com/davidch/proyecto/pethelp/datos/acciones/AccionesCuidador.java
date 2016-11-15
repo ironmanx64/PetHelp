@@ -59,15 +59,15 @@ public class AccionesCuidador {
         }.start();
     }
 
-    public void borrar(final List<Long> ids) {
+    public void borrar(final long[] idsCuidadores, final long idMascota) {
         new Thread() {
             @Override
             public void run() {
 
                 ArrayList<ContentProviderOperation> operaciones = new ArrayList<>();
-                for (Long id: ids) {
+                for (Long id: idsCuidadores) {
                     operaciones.add(ContentProviderOperation
-                            .newUpdate(PethelpContentProvider.getUriCuidador(id))
+                            .newUpdate(PethelpContentProvider.getUriCuidador(idMascota, id))
                             .withValue(Cuidadores.BORRADO, true)
                             .build());
                 }

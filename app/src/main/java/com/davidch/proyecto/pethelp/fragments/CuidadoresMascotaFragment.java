@@ -24,8 +24,11 @@ import android.widget.ListView;
 import com.davidch.proyecto.pethelp.DescriptionPetActivity;
 import com.davidch.proyecto.pethelp.R;
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
+import com.davidch.proyecto.pethelp.datos.acciones.AccionesCuidador;
 import com.davidch.proyecto.pethelp.datos.tablas.Cuidadores;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
+
+import java.util.Arrays;
 
 public class CuidadoresMascotaFragment extends ListFragment
         implements
@@ -38,10 +41,14 @@ public class CuidadoresMascotaFragment extends ListFragment
     private CursorAdapter adapterCuidadores;
     private FloatingActionButton buttonAniadirCuidador;
     private long idMascota;
+    private AccionesCuidador accionesCuidador;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        accionesCuidador = new AccionesCuidador(getContext().getContentResolver(), getContext());
+
         DescriptionPetActivity activity = (DescriptionPetActivity)getActivity();
         idMascota = activity.getIntent().getLongExtra(Mascotas.ID, -1);
 
@@ -73,7 +80,8 @@ public class CuidadoresMascotaFragment extends ListFragment
         return new CursorLoader(getContext(),
                 PethelpContentProvider.getUriCuidadores(),
                 Cuidadores.PROYECCION_COMPLETA,
-                Cuidadores.ID_MASCOTA + "=?",
+                Cuidadores.ID_MASCOTA + " =? AND " +
+                Cuidadores.BORRADO + " = 0",
                 new String [] {Long.toString(idMascota)},
                 null);
     }
@@ -118,7 +126,7 @@ public class CuidadoresMascotaFragment extends ListFragment
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         if (item.getItemId() == R.id.menuItemBorrar) {
             long [] ids = getListView().getCheckedItemIds();
-
+            accionesCuidador.borrar(ids, idMascota);
         }
         return false;
     }

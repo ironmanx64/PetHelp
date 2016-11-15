@@ -11,7 +11,10 @@ import android.net.Uri;
 import com.davidch.proyecto.pethelp.datos.tablas.Cuidadores;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
 import com.davidch.proyecto.pethelp.datos.tablas.Tabla;
+import com.davidch.proyecto.pethelp.modelo.Cuidador;
 import com.davidch.proyecto.pethelp.modelo.Mascota;
+
+import java.util.List;
 
 public class PethelpContentProvider extends ContentProvider {
 
@@ -28,8 +31,8 @@ public class PethelpContentProvider extends ContentProvider {
     public static Uri getUriCuidadores() {
         return Uri.withAppendedPath(BASE_URI, "cuidadores");
     }
-    public static Uri getUriCuidador(long id) {
-        return Uri.withAppendedPath(getUriMascotas(), Long.toString(id));
+    public static Uri getUriCuidador(long idMascota, long idCuidador) {
+        return Uri.withAppendedPath(Uri.withAppendedPath(getUriCuidadores(), Long.toString(idMascota)), Long.toString(idCuidador));
     }
 
     private static final UriMatcher URI_MATCHER;
@@ -44,7 +47,7 @@ public class PethelpContentProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTORITY, "mascotas", URI_MASCOTAS);
         URI_MATCHER.addURI(AUTORITY, "mascotas/#", URI_MASCOTA);
         URI_MATCHER.addURI(AUTORITY, "cuidadores", URI_CUIDADORES);
-        URI_MATCHER.addURI(AUTORITY, "cuidadores/#", URI_CUIDADOR);
+        URI_MATCHER.addURI(AUTORITY, "cuidadores/#/#", URI_CUIDADOR);
     }
 
     private SQLiteOpenHelper sqliteOpenHelper;
@@ -166,13 +169,26 @@ public class PethelpContentProvider extends ContentProvider {
         int codigoUri = URI_MATCHER.match(uri);
         switch (codigoUri) {
             case URI_MASCOTA:
-            case URI_CUIDADOR:
-                 modificadas = db.update(
-                        getTableFromUri(codigoUri),
+                modificadas = db.update(
+                        Mascotas.TABLA,
                         values,
                         Tabla.ID + "=?",
                         new String [] {
                                 uri.getLastPathSegment()
+                        });
+                break;
+            case URI_CUIDADOR:
+                List<String> segments = uri.getPathSegments();
+                String idMascota = segments.get(1);
+                String idCuidador = segments.get(2);
+                modificadas = db.update(
+                        Cuidadores.TABLA,
+                        values,
+                        Tabla.ID + "=? AND " +
+                        Cuidadores.ID_MASCOTA + "=?",
+                        new String [] {
+                                idCuidador,
+                                idMascota
                         });
                 break;
             default:
