@@ -47,7 +47,7 @@ public class SincronizacionCuidadores {
     }
 
     public void sincronizar() {
-
+        /*
         List<Cuidador> borrables = Cuidador.fromCursor(buscarPendientesBorrar());
 
         Map<String, List<Cuidador>> datos = new HashMap<>();
@@ -58,7 +58,7 @@ public class SincronizacionCuidadores {
 
         } catch (IOException e) {
             Log.w(TAG, "Error al sincronizar en servidor", e);
-        }
+        }*/
 
     }
 }

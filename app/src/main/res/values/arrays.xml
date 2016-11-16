@@ -16,4 +16,14 @@
         <item>Python</item>
         <item>Ruby on Rails</item>
     </string-array>
+
+    <string-array name="sonidosanimales">
+        <item>dog_1.wav</item>
+        <item>Cat.wav</item>
+        <item>cow.wav</item>
+        <item>duck_1.wav</item>
+        <item>elephant_1.wav</item>
+        <item>lion.wav</item>
+    </string-array>
+
 </resources>
