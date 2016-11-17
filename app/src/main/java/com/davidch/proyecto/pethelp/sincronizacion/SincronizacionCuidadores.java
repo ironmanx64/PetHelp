@@ -50,11 +50,22 @@ public class SincronizacionCuidadores {
         /*
         List<Cuidador> borrables = Cuidador.fromCursor(buscarPendientesBorrar());
 
-        Map<String, List<Cuidador>> datos = new HashMap<>();
-        datos.put("borrables", borrables);
-
         try {
-            sw.borrarCuidadores(datos).execute();
+            Response<List<Cuidador>> cuidadores =  sw.sincronizarCuidadores(borrables).execute();
+
+            if (cuidadores.isSuccessful()) {
+                resolver.delete(PethelpContentProvider.getUriCuidadores(), null, null);
+                ContentValues[] cvs = new ContentValues [cuidadores.body().size()];
+                int i = 0;
+                for (Cuidador cuidador: cuidadores.body()) {
+                    cvs[i++] = cuidador.toContentValues();
+                }
+                resolver.bulkInsert(PethelpContentProvider.getUriCuidadores(), cvs);
+            }
+            else {
+                Log.w(TAG, "Error al sincronizar en servidor (Código HTTP " + cuidadores.code());
+            }
+
 
         } catch (IOException e) {
             Log.w(TAG, "Error al sincronizar en servidor", e);

@@ -42,8 +42,9 @@ public class AccionesCuidador {
             public void run() {
 
                 try {
-                    Response<Void> resultado = servicio.registrar(cuidador).execute();
+                    Response<Cuidador> resultado = servicio.registrar(cuidador).execute();
                     if (resultado.isSuccessful()) {
+                        cuidador.setIdCuidador(resultado.body().getIdCuidador());
                         contentResolver.insert(
                                 PethelpContentProvider.getUriCuidadores(),
                                 cuidador.toContentValues());
@@ -59,7 +60,7 @@ public class AccionesCuidador {
         }.start();
     }
 
-    public void borrar(final long[] idsCuidadores, final long idMascota) {
+    public void borrar(final long[] idsCuidadores) {
         new Thread() {
             @Override
             public void run() {
@@ -67,7 +68,7 @@ public class AccionesCuidador {
                 ArrayList<ContentProviderOperation> operaciones = new ArrayList<>();
                 for (Long id: idsCuidadores) {
                     operaciones.add(ContentProviderOperation
-                            .newUpdate(PethelpContentProvider.getUriCuidador(idMascota, id))
+                            .newUpdate(PethelpContentProvider.getUriCuidador(id))
                             .withValue(Cuidadores.BORRADO, true)
                             .build());
                 }

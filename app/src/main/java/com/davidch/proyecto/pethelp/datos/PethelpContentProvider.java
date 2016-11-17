@@ -31,8 +31,8 @@ public class PethelpContentProvider extends ContentProvider {
     public static Uri getUriCuidadores() {
         return Uri.withAppendedPath(BASE_URI, "cuidadores");
     }
-    public static Uri getUriCuidador(long idMascota, long idCuidador) {
-        return Uri.withAppendedPath(Uri.withAppendedPath(getUriCuidadores(), Long.toString(idMascota)), Long.toString(idCuidador));
+    public static Uri getUriCuidador(long idCuidador) {
+        return Uri.withAppendedPath(getUriCuidadores(), Long.toString(idCuidador));
     }
 
     private static final UriMatcher URI_MATCHER;
@@ -47,7 +47,7 @@ public class PethelpContentProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTORITY, "mascotas", URI_MASCOTAS);
         URI_MATCHER.addURI(AUTORITY, "mascotas/#", URI_MASCOTA);
         URI_MATCHER.addURI(AUTORITY, "cuidadores", URI_CUIDADORES);
-        URI_MATCHER.addURI(AUTORITY, "cuidadores/#/#", URI_CUIDADOR);
+        URI_MATCHER.addURI(AUTORITY, "cuidadores/#", URI_CUIDADOR);
     }
 
     private SQLiteOpenHelper sqliteOpenHelper;
@@ -75,9 +75,11 @@ public class PethelpContentProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase db = sqliteOpenHelper.getWritableDatabase();
         int borrado;
-        switch (URI_MATCHER.match(uri)) {
+        int codigoUri = URI_MATCHER.match(uri);
+        switch (codigoUri) {
             case URI_MASCOTAS:
-                borrado = db.delete(Mascotas.TABLA, selection, selectionArgs);
+            case URI_CUIDADORES:
+                borrado = db.delete(getTableFromUri(codigoUri), selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Uri no válida: " + uri);
@@ -96,10 +98,12 @@ public class PethelpContentProvider extends ContentProvider {
     public int bulkInsert(Uri uri, ContentValues[] values) {
         SQLiteDatabase db = sqliteOpenHelper.getWritableDatabase();
         int cont = 0;
-        switch (URI_MATCHER.match(uri)) {
+        int codigoUri = URI_MATCHER.match(uri);
+        switch (codigoUri) {
             case URI_MASCOTAS:
+            case URI_CUIDADORES:
                 for (ContentValues value: values) {
-                    if (db.insert(Mascotas.TABLA, null, value) != -1) {
+                    if (db.insert(getTableFromUri(codigoUri), null, value) != -1) {
                         cont++;
                     }
                 }
@@ -169,26 +173,13 @@ public class PethelpContentProvider extends ContentProvider {
         int codigoUri = URI_MATCHER.match(uri);
         switch (codigoUri) {
             case URI_MASCOTA:
+            case URI_CUIDADOR:
                 modificadas = db.update(
-                        Mascotas.TABLA,
+                        getTableFromUri(codigoUri),
                         values,
                         Tabla.ID + "=?",
                         new String [] {
                                 uri.getLastPathSegment()
-                        });
-                break;
-            case URI_CUIDADOR:
-                List<String> segments = uri.getPathSegments();
-                String idMascota = segments.get(1);
-                String idCuidador = segments.get(2);
-                modificadas = db.update(
-                        Cuidadores.TABLA,
-                        values,
-                        Tabla.ID + "=? AND " +
-                        Cuidadores.ID_MASCOTA + "=?",
-                        new String [] {
-                                idCuidador,
-                                idMascota
                         });
                 break;
             default:

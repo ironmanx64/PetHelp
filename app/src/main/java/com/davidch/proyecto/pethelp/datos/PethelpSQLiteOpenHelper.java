@@ -15,7 +15,7 @@ import com.davidch.proyecto.pethelp.modelo.Mascota;
 public class PethelpSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String NOMBRE_BD = "pethelp.sqlite";
-    private static final int VERSION_BD = 7;
+    private static final int VERSION_BD = 9;
 
     public PethelpSQLiteOpenHelper(Context context) {
         super(context, NOMBRE_BD, null, VERSION_BD);

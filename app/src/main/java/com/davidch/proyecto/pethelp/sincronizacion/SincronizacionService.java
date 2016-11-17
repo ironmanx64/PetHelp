@@ -37,6 +37,7 @@ public class SincronizacionService extends IntentService {
         if (intent != null) {
             if (hayConexionAInternet()) {
                 new SincronizadorMascotas(this).sincronizar();
+                new SincronizacionCuidadores(this).sincronizar();
             }
             else {
                 Log.d(TAG, "Sincronizacion interrumpida. No hay conexión.");

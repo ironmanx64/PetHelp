@@ -23,6 +23,7 @@ import android.widget.ListView;
 
 import com.davidch.proyecto.pethelp.DescriptionPetActivity;
 import com.davidch.proyecto.pethelp.R;
+import com.davidch.proyecto.pethelp.adaptadores.CuidadoresListAdapter;
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.datos.acciones.AccionesCuidador;
 import com.davidch.proyecto.pethelp.datos.tablas.Cuidadores;
@@ -52,12 +53,7 @@ public class CuidadoresMascotaFragment extends ListFragment
         DescriptionPetActivity activity = (DescriptionPetActivity)getActivity();
         idMascota = activity.getIntent().getLongExtra(Mascotas.ID, -1);
 
-        adapterCuidadores = new SimpleCursorAdapter(getContext(),
-                R.layout.item_cuidador,
-                null,
-                new String [] {Cuidadores.NICK},
-                new int [] {R.id.textViewCuidador},
-                0);
+        adapterCuidadores = new CuidadoresListAdapter(getContext(), null);
         setListAdapter(adapterCuidadores);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         getListView().setMultiChoiceModeListener(this);
@@ -79,7 +75,7 @@ public class CuidadoresMascotaFragment extends ListFragment
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getContext(),
                 PethelpContentProvider.getUriCuidadores(),
-                Cuidadores.PROYECCION_COMPLETA,
+                CuidadoresListAdapter.PROYECCION,
                 Cuidadores.ID_MASCOTA + " =? AND " +
                 Cuidadores.BORRADO + " = 0",
                 new String [] {Long.toString(idMascota)},
@@ -126,7 +122,7 @@ public class CuidadoresMascotaFragment extends ListFragment
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         if (item.getItemId() == R.id.menuItemBorrar) {
             long [] ids = getListView().getCheckedItemIds();
-            accionesCuidador.borrar(ids, idMascota);
+            accionesCuidador.borrar(ids);
         }
         return false;
     }
