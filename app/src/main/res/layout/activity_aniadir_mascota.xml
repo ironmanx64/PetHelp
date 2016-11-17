@@ -33,7 +33,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="elegir foto"
+        android:text="@string/ElegirFoto"
         android:onClick="onClick"
         android:id="@+id/buttonElegirFotoMascota"
         android:layout_alignParentBottom="true"
@@ -76,19 +76,10 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextNombreMascota"
-        android:hint="Nombre Mascota"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/editTextApodoMascota"
-        android:hint="Apodo Mascota"
+        android:hint="@string/ApodoMascota"
         android:layout_below="@+id/editTextNombreMascota"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -102,7 +93,7 @@
         android:clickable="true"
         android:focusable="false"
         android:id="@+id/editTextFechaNacimiento"
-        android:hint="FechaNacimiento"
+        android:hint="@string/FechaNacimiento"
         android:layout_below="@+id/editTextApodoMascota"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -117,7 +108,7 @@
         android:clickable="true"
         android:focusable="false"
         android:id="@+id/editTextFechaReproduccion"
-        android:hint="Fecha Reproduccion"
+        android:hint="@string/FechaReproduccion"
         android:layout_below="@+id/editTextFechaNacimiento"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -132,5 +123,14 @@
         android:layout_below="@+id/spinnerEspecie"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextNombreMascota"
+        android:hint="Nombre Mascota"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

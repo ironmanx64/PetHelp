@@ -170,12 +170,6 @@ public class AniadirMascotaActivity extends AppCompatActivity
         }
     }
 
-
-
-
-
-
-
     private void setDateTimeFieldfechanacimiento() {
         editTextFechaNacimiento.setOnClickListener(this);
 

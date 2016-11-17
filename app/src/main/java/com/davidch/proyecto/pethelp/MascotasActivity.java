@@ -1,5 +1,6 @@
 package com.davidch.proyecto.pethelp;
 
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,71 +24,124 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-
 import com.davidch.proyecto.pethelp.datos.PethelpContentProvider;
 import com.davidch.proyecto.pethelp.adaptadores.MascotasAdapter;
 import com.davidch.proyecto.pethelp.datos.acciones.AccionesMascota;
 import com.davidch.proyecto.pethelp.datos.tablas.Mascotas;
-import com.davidch.proyecto.pethelp.servicio.IntentServicemusicaanimalia;
+import com.davidch.proyecto.pethelp.servicio.ServicioMusicaAnimalia;
 import com.davidch.proyecto.pethelp.sincronizacion.SincronizacionService;
 
-import java.util.ArrayList;
-import java.util.Random;
+import static com.davidch.proyecto.pethelp.LoginActivity.canLoadSound;
+import static com.davidch.proyecto.pethelp.LoginActivity.canPlaySound;
+import static com.davidch.proyecto.pethelp.LoginActivity.idSonido;
+import static com.davidch.proyecto.pethelp.LoginActivity.mSound;
+import static com.davidch.proyecto.pethelp.LoginActivity.savepos;
+import static com.davidch.proyecto.pethelp.LoginActivity.volumenActual;
+import static com.davidch.proyecto.pethelp.LoginActivity.volumenMaximo;
 
 public class MascotasActivity extends AppCompatActivity
         implements
-            LoaderManager.LoaderCallbacks<Cursor>,
-            MascotasAdapter.OnMascotaClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>,
+        MascotasAdapter.OnMascotaClickListener {
 
     public static final int LOADER_MASCOTAS = 1;
-
-    protected static AudioManager am;
-
-    private int volumenActual, volumenMaximo;
 
     private MascotasAdapter adapter;
 
     private AccionesMascota accionesMascota;
 
-    private SoundPool mSound;
-
-    private int idSonido;
-
-    private static int aleatorio;
-
-    private static String[] longitudsonidosanimales;
-
-    String cadena;
-
-    private boolean canPlaySound = false; //me dice si tengo el auto focus
+    protected static Intent serviciomusicaanimalia;
 
     public static void abrirMascotasActivity(Context context) {
         Intent intent = new Intent(context, MascotasActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
+        if (canPlaySound && canLoadSound) {
+            //reproducir el sonido
+            LoginActivity.AudioManager.playSoundEffect(AudioManager.FX_KEY_CLICK, volumenActual);
+            mSound.play(idSonido, (float) volumenActual / volumenMaximo, (float) volumenActual / volumenMaximo, 1, 3, 1);//prioridad 1, repito 3 veces y velocidad 1
+        }
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_mascotas);
+        //musica de fondo animalia
+        serviciomusicaanimalia=new Intent(this,ServicioMusicaAnimalia.class);
+        serviciomusicaanimalia.putExtra("pos", savepos);
+        startService(serviciomusicaanimalia);
 
-        //averiguo volumen actual y máximo
-        volumenActual = am.getStreamVolume(AudioManager.STREAM_MUSIC);
-        volumenMaximo = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        //creo la instancia del soundpool
 
+        //obtengo el audiomanager
+        LoginActivity.AudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        //aviso que voy a controlar el volumen de la musica
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        //averiguo volumen actual y maximo
+        volumenActual = LoginActivity.AudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        volumenMaximo = LoginActivity.AudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        crearInstanciaSoundPool();
+        //cargo los diferentes sonidos , en este caso solo hay uno
+        idSonido = mSound.load(this, R.raw.lion, 1);
+        // Asigno el listener OnLoadCompleteListener al SoundPool
+        //para saber cuándo están cargados los sonidos
+        mSound.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId,
+                                       int status) {
+                // Si el sonido ha sido cargado ya
+                if (status == 0) {
+                    //activo el botón play
+                    canLoadSound = true;
+                } else {
+                    canLoadSound = false;
+                    Log.i("MIAPLI", "imposible cargar el sonido");
+                    finish();
+                }
+            }
+        });
 
-        //cargo los diferentes sonidos. En este caso sólo hay uno
+        // Oyente que escucha cambios en la adquisición del Audio Focus
+        AudioManager.OnAudioFocusChangeListener afChangeListener =
+                new AudioManager.OnAudioFocusChangeListener() {
+                    public void onAudioFocusChange(int focusChange) {
+                        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+                            // Pause playback
+                            canPlaySound = false;
+                        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                            // Resume playback
+                            canPlaySound = true;
+                        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                            //desregistro el oyente de cambios en el audio focus
+                            LoginActivity.AudioManager.abandonAudioFocus(this);
+                            // Stop playback
+                            canPlaySound = false;
+                        }
+                    }
+                };
 
-        idSonido=mSound.load(this,R.raw.lion,1);
+        //PIDO EL AUDIO FOCUS O FOCO DEL CANAL DE AUDIO
+        int result = LoginActivity.AudioManager.requestAudioFocus(afChangeListener,
+                // Use the music stream.
+                AudioManager.STREAM_MUSIC,
+                // Request transient focus (temporal).
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        // Start playback.
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            //puedo reproducir sonidos
+            canPlaySound = true;
+        }
+
 
         accionesMascota = new AccionesMascota(this.getContentResolver());
 
-        IntentServicemusicaanimalia.startMusica(getBaseContext());
 
-        FloatingActionButton botonflotantemascotas = (FloatingActionButton)findViewById(R.id.buttonfloatingmascotas);
-        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.reclicerview);
+        FloatingActionButton botonflotantemascotas = (FloatingActionButton) findViewById(R.id.buttonfloatingmascotas);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reclicerview);
 
         adapter = new MascotasAdapter(null, this);
 
@@ -97,15 +151,7 @@ public class MascotasActivity extends AppCompatActivity
         botonflotantemascotas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(canPlaySound){
-                    //puedo reproducir sonido
-                    am.playSoundEffect(AudioManager.FX_KEY_CLICK, volumenActual);
-                    mSound.play(idSonido,
-                            (float)volumenActual/volumenMaximo,
-                            (float)volumenActual/volumenMaximo,
-                            1,3,1);//prioridad 1, repito 3 veces y velocidad 1
-                }
-                Intent intentmascotadescrip = new Intent (getBaseContext(),AniadirMascotaActivity.class);
+                Intent intentmascotadescrip = new Intent(getBaseContext(), AniadirMascotaActivity.class);
                 startActivity(intentmascotadescrip);
                 overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
             }
@@ -114,27 +160,6 @@ public class MascotasActivity extends AppCompatActivity
         SincronizacionService.startService(this);
         getSupportLoaderManager().initLoader(LOADER_MASCOTAS, null, this);
     }
-
-
-    //libero recursos
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mSound !=null) {
-        //descargo de memoria el sonido
-            mSound.unload(idSonido);
-            //libero el SoundPool
-            mSound.release();
-            mSound = null;
-        }
-        //descargo los efectos de sonido de las teclas de memoria
-        am.unloadSoundEffects();
-    }
-
-    /** Método que crea una instancia de SoundPool adaptada a la versión de SO que
-     * tengamos
-     *
-     */
 
     private void crearInstanciaSoundPool() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -151,38 +176,67 @@ public class MascotasActivity extends AppCompatActivity
         }
     }
 
-    protected void onResume() {
-        super.onResume();
-        am.loadSoundEffects();
-        if (mSound !=null) {
-            //cargo los sonidos
-            idSonido=mSound.load(this,R.raw.lion,1);
-        }else{
-            crearInstanciaSoundPool();
-            //cargo los sonidos
-            idSonido=mSound.load(this,R.raw.lion,1);
+
+    //libero recursos
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mSound != null) {
+            //descargo de memoria el sonido
+            mSound.unload(idSonido);
+            //libero el SoundPool
+            mSound.release();
+            mSound = null;
         }
+        //descargo los efectos de sonido de las teclas de memoria
+        LoginActivity.AudioManager.unloadSoundEffects();
+        //pauso la musica
+        stopService(serviciomusicaanimalia);
     }
 
-    // Oyente que escucha cambios en la adquisición del Audio Focus
-    AudioManager.OnAudioFocusChangeListener afChangeListener =
-            new AudioManager.OnAudioFocusChangeListener() {
-                public void onAudioFocusChange(int focusChange) {
-                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-                        // Pause playback
-                        canPlaySound=false;
-                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                        // Resume playback
-                        canPlaySound=true;
-                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                        am.abandonAudioFocus(this);
-                        // Stop playback
-                        canPlaySound=false;
-                    }
-                }
-            };
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Musica de fondo arrancado
+        serviciomusicaanimalia=new Intent(this,ServicioMusicaAnimalia.class);
+        serviciomusicaanimalia.putExtra("pos",savepos);
+        startService(serviciomusicaanimalia);
+    }
 
+    protected void onResume() {
+        super.onResume();
+        super.onResume();
+        LoginActivity.AudioManager.loadSoundEffects();
+        if (mSound != null) {
+            //cargo los sonidos
+            idSonido = mSound.load(this, R.raw.lion, 1);
+        } else {
+            crearInstanciaSoundPool();
+            //cargo los sonidos
+            idSonido = mSound.load(this, R.raw.lion, 1);
+        }
+        //Musica de fondo arrancado
+        serviciomusicaanimalia=new Intent(this,ServicioMusicaAnimalia.class);
+        serviciomusicaanimalia.putExtra("pos",savepos);
+        startService(serviciomusicaanimalia);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopService(serviciomusicaanimalia);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(serviciomusicaanimalia);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
     //opcion quitada de menu puesto floating button
     @Override
@@ -191,7 +245,7 @@ public class MascotasActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.aniadirmascota,menu);
         return super.onCreateOptionsMenu(menu);
         */
-        getMenuInflater().inflate(R.menu.nav_menu,menu);
+        getMenuInflater().inflate(R.menu.nav_menu, menu);
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -212,7 +266,6 @@ public class MascotasActivity extends AppCompatActivity
 
     }
     */
-
 
 
     @Override
@@ -238,14 +291,6 @@ public class MascotasActivity extends AppCompatActivity
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 if (item.getItemId() == R.id.menuItemBorrar) {
-                    if(canPlaySound){
-                        //puedo reproducir sonido
-                        am.playSoundEffect(AudioManager.FX_KEY_CLICK, volumenActual);
-                        mSound.play(idSonido,
-                                (float)volumenActual/volumenMaximo,
-                                (float)volumenActual/volumenMaximo,
-                                1,3,1);//prioridad 1, repito 3 veces y velocidad 1
-                    }
                     accionesMascota.borrar(adapter.getIdsSeleccionados());
                     mode.finish();
                     return true;

@@ -8,32 +8,47 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.davidch.proyecto.pethelp.LoginActivity"
-    android:background="@drawable/paw">
+    >
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifview1login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/tumblrdoggy"
+        android:background="@drawable/patasfondo"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
+        style="@style/Theme.App.Base"
+        android:textColorHint="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Name"
         android:ems="10"
         android:id="@+id/editTextNombrelogin"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <EditText
+        style="@style/Theme.App.Base"
+        android:textColorHint="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editTextpasswordlogin"
-        android:text="Password"
-        android:layout_below="@+id/editTextNombrelogin"
+        android:hint="Password"
+        android:layout_above="@+id/buttonaceptarlogin"
         android:layout_alignLeft="@+id/editTextNombrelogin"
         android:layout_alignStart="@+id/editTextNombrelogin"
-        android:layout_marginTop="51dp" />
+        android:layout_marginBottom="11dp" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
@@ -42,22 +57,27 @@
         android:layout_toLeftOf="@+id/progressBarlogin"
         android:layout_toStartOf="@+id/progressBarlogin" />
 
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrarse"
+        android:id="@+id/buttonregistrarselogin"
+        android:layout_alignBaseline="@+id/buttonaceptarlogin"
+        android:layout_alignBottom="@+id/buttonaceptarlogin"
+        android:layout_toRightOf="@+id/buttonaceptarlogin"
+        android:layout_toEndOf="@+id/buttonaceptarlogin"
+        android:layout_marginLeft="42dp"
+        android:layout_marginStart="42dp" />
+
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBarlogin"
         android:indeterminate="true"
+        tools:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrarse"
-        android:id="@+id/buttonregistrarselogin"
-        android:layout_alignTop="@+id/buttonaceptarlogin"
-        android:layout_alignRight="@+id/editTextpasswordlogin"
-        android:layout_alignEnd="@+id/editTextpasswordlogin" />
 
 </RelativeLayout>
